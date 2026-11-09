@@ -1,3 +1,23 @@
-* {
-  background-color: rgb(255, 254, 247);
+@import "./normalize.css";
+
+:root {
+  /* Paleta del logo */
+  --color-verde: #2f7d4f;
+  --color-naranja: #d9702a;
+  --color-turquesa: #2a8a8a;
+  --color-crema: #fffbf4;
+
+  /* Variantes para usarlas de distintas formas */
+  --color-verde-oscuro: #1f5a37;
+  --color-verde-claro: #e3f1e8;
+  --color-naranja-claro: #fbebdd;
+
+  /* Texto */
+  --color-texto: #1f2d24;
+  --color-texto-suave: #4e5f55;
+}
+
+body {
+  background-color: var(--color-crema);
+  color: var(--color-texto);
 }
