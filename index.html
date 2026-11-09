@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-     <link rel="icon" type="image/png" href="./src/Icon.png" />
+    <link rel="stylesheet" href="./src/css/normalize.css" />
+    <link rel="icon" type="image/png" href="./src/Icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NutriComunidad</title>
-    <style href="./src/normalize.css"></style>
   </head>
   <body>
     <header class="header">
@@ -15,11 +15,35 @@
       </div>
       <nav class="header-nav">
         <a href="/src/views/login.html" class="header-link-login">Iniciar sesión</a>
-        <a href="/src/views/register.html" class="header-link-register">Registrarse</a>
-        <a id
+        <ul class="header-nav-list">
+          <li class="header-nav-item"><a href="#acerca-de" class="header-link">Acerca de nosotros</a></li>
+          <li class="header-nav-item"><a href="#contacto" class="header-link">Contacto</a></li>
+          <li class="header-nav-item"><a href="#ubicación" class="header-link">Ubicación</a></li>
+        </ul>
       </nav>
     </header>
-
+    <div id="acerca-de" class="section">
+      <h2 class="section-title">Acerca de nosotros</h2>
+      <p class="section-text">NutriComunidad es una plataforma dedicada a promover hábitos alimenticios saludables y brindar información nutricional confiable. Nuestro objetivo es ayudar a las personas a tomar decisiones informadas sobre su alimentación y bienestar.</p>
+    </div>
+    <div id="contacto" class="section">
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-text">¿Tienes alguna pregunta? ¡Contáctanos! Estamos aquí para ayudarte.</p>
+      <section class="datos-contacto">
+        <p><strong>Correo electrónico:</strong> <a href="mailto:nutricom@gmail.com">nutricom@gmail.com</a> </p>
+        <p><strong>Teléfono:</strong> <a href="tel:+522211334455">+52 221 133 4455</a></p>
+      </section>
+    </div>
+    <div id="ubicación" class="section">
+      <h2 class="section-title">Ubicación</h2>
+      <p class="section-text">Visita nuestra sede principal o encuentra un punto de atención cerca de ti.</p>
+      <section class="section-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.3680671287966!2d-98.26076258888335!3d19.04754818207646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc703e5d36627%3A0x9f373f2c5380457a!2sUniversidad%20Madero!5e0!3m2!1ses-419!2smx!4v1794257624800!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </section>
+    </div>
+    <footer class="footer">
+      <p class="footer-text">© 2026 NutriComunidad. Todos los derechos reservados.</p>
+    </footer>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
