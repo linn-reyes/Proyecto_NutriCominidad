@@ -2,11 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+     <link rel="icon" type="image/png" href="./src/Icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nutri-comunidad</title>
+    <title>NutriComunidad</title>
+    <style href="./src/normalize.css"></style>
   </head>
   <body>
+    <header class="header">
+      <div class="header-titulo-logo-container">
+        <img src="./src/Icon.png" alt="Logo de NutriComunidad" class="header-logo-img" />
+        <h1 class="header-title">NutriComunidad</h1>
+      </div>
+      <nav class="header-nav">
+        <a href="/src/views/login.html" class="header-link-login">Iniciar sesión</a>
+        <a href="/src/views/register.html" class="header-link-register">Registrarse</a>
+        <a id
+      </nav>
+    </header>
+
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
