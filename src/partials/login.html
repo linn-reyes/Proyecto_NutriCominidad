@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Inicio de Sesión</title>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <img class="header__imagen" src="../img/NutriComunidad.jpeg" width="150" height="150" alt="Logo de NutriComunidad">
+    </header>
+
+    <main class="main">
+        <section class="seccion">
+            <h2 class="seccion__titulo">Inicia sesión en NutriComunidad</h2>
+            <p class="seccion__texto">Conecta comercios, organizaciones y familias para un mejor uso de los alimentos.</p>
+
+            <form class="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="tipo">Iniciar sesión como:</label>
+                    <select class="formulario__select" id="tipo" name="tipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="usuario">Usuario</option>
+                        <option value="comercio">Comercio</option>
+                        <option value="organizacion">Organización</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="correo">Correo Electrónico:</label>
+                    <input class="formulario__input" type="email" id="correo" name="email" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="pass">Contraseña:</label>
+                    <input class="formulario__input" type="password" id="pass" name="password" placeholder="Tu contraseña" autocomplete="current-password" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <button class="formulario__boton" type="submit">Iniciar Sesión</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    
+</body>
+</html>
