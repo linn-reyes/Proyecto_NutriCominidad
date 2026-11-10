@@ -1,0 +1,117 @@
+@import './global.css';
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espacio-s);
+  padding: var(--espacio-s) var(--espacio-m);
+  background-color: var(--color-blanco);
+  border-bottom: 3px solid var(--color-verde);
+  box-shadow: var(--sombra);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-xs);
+  text-decoration: none;
+}
+
+.header__imagen {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.header__nombre {
+  font-family: var(--fuente-titulos);
+  font-size: 1.4rem;
+  color: var(--color-verde);
+}
+
+.header__salir {
+  padding: var(--espacio-xs) var(--espacio-s);
+  border: 2px solid var(--color-naranja);
+  border-radius: var(--radio);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-naranja);
+}
+
+.header__salir:hover {
+  background-color: var(--color-naranja);
+  color: var(--color-blanco);
+}
+
+/* Contenido */
+.main {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: var(--espacio-l) var(--espacio-s);
+}
+
+.bienvenida {
+  margin-bottom: var(--espacio-l);
+  padding: var(--espacio-l) var(--espacio-m);
+  text-align: center;
+  background-color: var(--color-verde-claro);
+  border-radius: var(--radio);
+}
+
+.bienvenida__titulo {
+  font-size: 2rem;
+  color: var(--color-verde-oscuro);
+}
+
+.bienvenida__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+/* Módulos */
+.modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--espacio-m);
+}
+
+.modulo {
+  display: block;
+  padding: var(--espacio-m);
+  background-color: var(--color-blanco);
+  border: 2px solid transparent;
+  border-top: 5px solid var(--color-turquesa);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  text-decoration: none;
+  color: var(--color-texto);
+}
+
+.modulo:hover {
+  border-color: var(--color-turquesa);
+  color: var(--color-texto);
+}
+
+.modulo__titulo {
+  margin-bottom: var(--espacio-xs);
+  font-size: 1.3rem;
+  color: var(--color-verde);
+}
+
+.modulo__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .bienvenida__titulo {
+    font-size: 1.5rem;
+  }
+}
