@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./src/css/normalize.css" />
-    <link rel="icon" type="image/png" href="./src/Icon.png" />
+    <link rel="stylesheet" href="./src/css/index.css" />
+    <link rel="icon" type="image/png" href="./src/img/Icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NutriComunidad</title>
   </head>
@@ -17,8 +17,19 @@
         />
         <h1 class="header__title">NutriComunidad</h1>
       </div>
+      <button
+        class="header__toggle"
+        type="button"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menu-principal"
+      >
+        <span class="header__toggle-line"></span>
+        <span class="header__toggle-line"></span>
+        <span class="header__toggle-line"></span>
+      </button>
       <nav class="header__nav">
-        <a href="/src/views/login.html" class="header__link header__link--login"
+        <a href="./src/partials/login.html" class="header__link header__link--login"
           >Iniciar sesión</a
         >
         <ul class="header__list">
@@ -51,22 +62,24 @@
       <section class="contact__info">
         <p class="contact__item">
           <strong class="contact__label">Correo electrónico:</strong>
-          <a href="mailto:nutricom@gmail.com">nutricom@gmail.com</a>
+          <a class="contact__link" href="mailto:nutricom@gmail.com"
+            >nutricom@gmail.com</a
+          >
         </p>
         <p class="contact__item">
           <strong class="contact__label">Teléfono:</strong>
-          <a href="tel:+522211334455" class="contact__link">+52 221 133 4455</a>
+          <a class="contact__link" href="tel:+522211334455">+52 221 133 4455</a>
         </p>
-      </section>  
+      </section>
     </div>
-    <div id="ubicación" class="location">
+    <div id="ubicacion" class="location">
       <h2 class="location__title">Ubicación</h2>
       <p class="location__text">
         Visita nuestra sede principal o encuentra un punto de atención cerca de
         ti.
       </p>
       <section class="location__map">
-        <iframe 
+        <iframe
           class="location__iframe"
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.3680671287966!2d-98.26076258888335!3d19.04754818207646!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc703e5d36627%3A0x9f373f2c5380457a!2sUniversidad%20Madero!5e0!3m2!1ses-419!2smx!4v1794257624800!5m2!1ses-419!2smx"
           width="600"
