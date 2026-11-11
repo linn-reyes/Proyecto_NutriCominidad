@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Detalle de preferencia</title>
+    <link rel="stylesheet" href="./src/css/detalle.css">
+</head>
+
+<body data-modulo="preferencias">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="preferencias-clientes.html">&larr; Volver a preferencias</a>
+
+        <p class="mensaje" id="mensaje-no-existe" hidden>La preferencia no existe.</p>
+
+        <section class="detalle" id="detalle">
+            <h2 class="detalle__titulo" id="titulo"></h2>
+            <dl class="detalle__datos" id="datos"></dl>
+            <div class="detalle__acciones">
+                <a class="detalle__boton" id="boton-editar" href="preferencia-form-cli.html">Editar</a>
+            </div>
+        </section>
+
+        <section class="detalle" id="seccion-alergias">
+            <h3 class="detalle__subtitulo">Alergias declaradas</h3>
+            <p class="mensaje" id="mensaje-sin-alergias" hidden>No hay alergias declaradas.</p>
+            <ul class="detalle__lista" id="alergias"></ul>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/detalle.js"></script>
+</body>
+
+</html>

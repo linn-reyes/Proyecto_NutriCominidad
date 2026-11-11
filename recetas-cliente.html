@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Recetas</title>
+    <link rel="stylesheet" href="./src/css/lista.css">
+</head>
+
+<body data-modulo="recetas">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="home.html">&larr; Volver al inicio</a>
+
+        <section class="encabezado">
+            <h2 class="encabezado__titulo">Recetas</h2>
+            <p class="encabezado__texto">Ideas de platillos económicos con alimentos disponibles.</p>
+        </section>
+
+        <p class="mensaje" id="mensaje-vacio" hidden>No hay recetas registradas.</p>
+
+        <div class="tabla">
+            <table class="tabla__tabla">
+                <thead>
+                    <tr>
+                        <th>Receta</th>
+                        <th>Preparación</th>
+                        <th>Porciones</th>
+                        <th>Costo estimado</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="lista"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/lista.js"></script>
+</body>
+
+</html>
