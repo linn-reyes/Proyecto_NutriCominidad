@@ -1,3 +1,6 @@
+import footerHtml from '../partials/footer.html?raw';
+document.querySelector('.footer').innerHTML = footerHtml;
+
 const boton = document.querySelector('.header__toggle')
 const menu = document.querySelector('.header__nav')
 const enlaces = menu.querySelectorAll('.header__link')

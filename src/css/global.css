@@ -66,3 +66,22 @@ a {
 a:hover {
   color: var(--color-verde-oscuro);
 }
+
+.footer {
+  padding: var(--espacio-m) var(--espacio-s);
+  text-align: center;
+  color: var(--color-crema);
+  background-color: var(--color-verde-oscuro);
+}
+
+.footer__texto,
+.footer__lema {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.footer__lema {
+  margin-top: 4px;
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-claro);
+}

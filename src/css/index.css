@@ -185,18 +185,6 @@
   display: block;
 }
 
-.footer {
-  background-color: var(--color-verde-oscuro);
-  color: var(--color-crema);
-  text-align: center;
-  padding: var(--espacio-m);
-  margin-top: var(--espacio-l);
-}
-
-.footer__text {
-  margin: 0;
-  font-size: 0.875rem;
-}
 
 @media (min-width: 768px) {
   .header {
