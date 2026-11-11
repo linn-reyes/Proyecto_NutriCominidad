@@ -1,0 +1,65 @@
+@import './global.css';
+@import './modulos.css';
+
+.encabezado {
+  margin-bottom: var(--espacio-m);
+  padding: var(--espacio-m);
+  background-color: var(--color-verde-claro);
+  border-radius: var(--radio);
+}
+
+.encabezado__titulo {
+  font-size: 1.8rem;
+  color: var(--color-verde-oscuro);
+}
+
+.encabezado__texto {
+  margin: 0 0 var(--espacio-s);
+  color: var(--color-texto-suave);
+}
+
+.encabezado__boton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--color-naranja);
+  border-radius: var(--radio);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-blanco);
+}
+
+.encabezado__boton:hover {
+  background-color: var(--color-naranja-oscuro);
+  color: var(--color-blanco);
+}
+
+/* Tarjetas de recomendaciones */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--espacio-m);
+}
+
+.tarjeta {
+  padding: var(--espacio-m);
+  background-color: var(--color-blanco);
+  border-top: 5px solid var(--color-naranja);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.tarjeta__titulo {
+  font-size: 1.3rem;
+  color: var(--color-verde);
+}
+
+.tarjeta__texto {
+  margin: 0 0 var(--espacio-xs);
+  color: var(--color-texto-suave);
+}
+
+.tarjeta__enlace {
+  display: inline-block;
+  margin-top: var(--espacio-xs);
+  font-weight: 700;
+}
