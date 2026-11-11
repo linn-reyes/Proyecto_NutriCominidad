@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Recomendaciones</title>
+    <link rel="stylesheet" href="./src/css/lista.css">
+</head>
+
+<body data-modulo="recomendaciones">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="home.html">&larr; Volver al inicio</a>
+
+        <section class="encabezado">
+            <h2 class="encabezado__titulo">Recomendaciones</h2>
+            <p class="encabezado__texto">Menús económicos sugeridos con los alimentos disponibles y tus preferencias.</p>
+        </section>
+
+        <p class="mensaje" id="mensaje-vacio" hidden>No hay recomendaciones disponibles por ahora.</p>
+
+        <section class="tarjetas" id="lista"></section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/recomendaciones.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Detalle de receta</title>
+    <link rel="stylesheet" href="./src/css/detalle.css">
+</head>
+
+<body data-modulo="recetas">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="recetas-cliente.html">&larr; Volver a recetas</a>
+
+        <p class="mensaje" id="mensaje-no-existe" hidden>La receta no existe.</p>
+
+        <section class="detalle" id="detalle">
+            <h2 class="detalle__titulo" id="titulo"></h2>
+            <dl class="detalle__datos" id="datos"></dl>
+        </section>
+
+        <section class="detalle" id="seccion-ingredientes">
+            <h3 class="detalle__subtitulo">Ingredientes</h3>
+            <p class="mensaje" id="mensaje-sin-ingredientes" hidden>Esta receta no tiene ingredientes registrados.</p>
+            <div class="tabla">
+                <table class="tabla__tabla">
+                    <thead>
+                        <tr>
+                            <th>Alimento</th>
+                            <th>Cantidad</th>
+                            <th>Unidad</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ingredientes"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/detalle.js"></script>
+</body>
+
+</html>

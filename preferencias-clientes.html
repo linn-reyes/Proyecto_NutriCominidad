@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Preferencias alimentarias</title>
+    <link rel="stylesheet" href="./src/css/lista.css">
+</head>
+
+<body data-modulo="preferencias">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="home.html">&larr; Volver al inicio</a>
+
+        <section class="encabezado">
+            <h2 class="encabezado__titulo">Preferencias alimentarias</h2>
+            <p class="encabezado__texto">Información voluntaria para personalizar tus recomendaciones.</p>
+            <a class="encabezado__boton" href="preferencia-form-cli.html">Nueva preferencia</a>
+        </section>
+
+        <p class="mensaje" id="mensaje-vacio" hidden>No hay preferencias registradas.</p>
+
+        <div class="tabla">
+            <table class="tabla__tabla">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Observaciones</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="lista"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/lista.js"></script>
+</body>
+
+</html>
