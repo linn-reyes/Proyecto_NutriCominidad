@@ -1,47 +1,71 @@
-import { cargarPartials } from './partials.js';
-import { obtenerRecetas, obtenerSolicitudes, obtenerPreferencias } from './datos.js';
+import { cargarPartials } from "./partials.js";
+import {
+  obtenerRecetas,
+  obtenerSolicitudes,
+  obtenerPreferencias,
+  obtenerSolicitudesOrganizacion,
+  obtenerEntregas
+} from './datos.js';
 
 cargarPartials();
 
 const modulo = document.body.dataset.modulo;
-const lista = document.querySelector('#lista');
-const mensajeVacio = document.querySelector('#mensaje-vacio');
-const tabla = document.querySelector('.tabla');
+const lista = document.querySelector("#lista");
+const mensajeVacio = document.querySelector("#mensaje-vacio");
+const tabla = document.querySelector(".tabla");
 
 // Qué datos y qué columnas usa cada módulo
 const modulos = {
   recetas: {
     obtener: obtenerRecetas,
-    id: 'ID_Receta',
-    detalle: 'receta-detalle-cli.html',
+    id: "ID_Receta",
+    detalle: "receta-detalle-cli.html",
     columnas: (receta) => [
       receta.Nombre_Receta,
       `${receta.Tiempo_Preparacion} min`,
       receta.Porciones,
-      `$${receta.Costo}`
-    ]
+      `$${receta.Costo}`,
+    ],
   },
   solicitudes: {
     obtener: obtenerSolicitudes,
-    id: 'ID_Solicitud',
-    detalle: 'solicitud-detalle-cli.html',
+    id: "ID_Solicitud",
+    detalle: "solicitud-detalle-cli.html",
     columnas: (solicitud) => [
       solicitud.Fecha_Solicitud,
       solicitud.Motivo,
       solicitud.Integrantes,
       solicitud.Prioridad,
-      solicitud.Estado
-    ]
+      solicitud.Estado,
+    ],
   },
   preferencias: {
     obtener: obtenerPreferencias,
-    id: 'ID_Preferencia',
-    detalle: 'preferencia-detalle-cli.html',
+    id: "ID_Preferencia",
+    detalle: "preferencia-detalle-cli.html",
     columnas: (preferencia) => [
       preferencia.Tipo,
       preferencia.Descripcion,
-      preferencia.Observaciones || '-'
-    ]
+      preferencia.Observaciones || "-",
+    ],
+  },
+  "solicitudes-org": {
+    obtener: obtenerSolicitudesOrganizacion,
+    id: "ID_Solicitud",
+    detalle: "solicitud-detalle-org.html",
+    columnas: (s) => [
+      s.Fecha_Solicitud,
+      s.Familia,
+      s.Integrantes,
+      s.Prioridad,
+      s.Estado,
+    ],
+  },
+  entregas: {
+    obtener: obtenerEntregas,
+    id: "ID_Entrega",
+    detalle: "entrega-detalle-org.html",
+    columnas: (e) => [e.Fecha_Entrega, e.Responsable, e.Estado],
   }
 };
 
@@ -56,19 +80,19 @@ async function mostrarLista() {
   }
 
   registros.forEach((registro) => {
-    const fila = document.createElement('tr');
+    const fila = document.createElement("tr");
 
     config.columnas(registro).forEach((valor) => {
-      const celda = document.createElement('td');
+      const celda = document.createElement("td");
       celda.textContent = valor;
       fila.appendChild(celda);
     });
 
-    const celdaDetalle = document.createElement('td');
-    const enlace = document.createElement('a');
-    enlace.className = 'tabla__enlace';
+    const celdaDetalle = document.createElement("td");
+    const enlace = document.createElement("a");
+    enlace.className = "tabla__enlace";
     enlace.href = `${config.detalle}?id=${registro[config.id]}`;
-    enlace.textContent = 'Ver';
+    enlace.textContent = "Ver";
     celdaDetalle.appendChild(enlace);
     fila.appendChild(celdaDetalle);
 

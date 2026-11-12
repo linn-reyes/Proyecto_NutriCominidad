@@ -1,5 +1,6 @@
 const ID_USUARIO_ACTUAL = 1;
 const ID_BENEFICIARIO_ACTUAL = 1;
+const ID_ORGANIZACION_ACTUAL = 1;
 
 const organizaciones = [
   { ID_Organizacion: 1, Nombre_Org: 'Banco de Alimentos Esperanza' },
@@ -85,7 +86,15 @@ const solicitudes = [
     Estado: 'Pendiente',
     ID_Beneficiario: 2,
     ID_Organizacion: 3
-  }
+  },
+  { ID_Solicitud: 4, 
+    Fecha_Solicitud: '2026-10-26', 
+    Motivo: 'Apoyo con cereales y leguminosas.',
+    Integrantes: 5, 
+    Prioridad: 'Alta', 
+    Estado: 'Atendida', 
+    ID_Beneficiario: 2, 
+    ID_Organizacion: 1 }
 ];
 
 const preferencias = [
@@ -115,6 +124,18 @@ const preferencias = [
 const alergias = [
   { ID_Alergia: 1, Nombre_Alergia: 'Cacahuate', ID_Usuario: 1 },
   { ID_Alergia: 2, Nombre_Alergia: 'Mariscos', ID_Usuario: 1 }
+];
+
+const beneficiarios = [
+  { ID_Beneficiario: 1, Nombre_Beneficiario: 'María', Apaterno: 'López' },
+  { ID_Beneficiario: 2, Nombre_Beneficiario: 'José', Apaterno: 'Hernández' }
+];
+
+const entregas = [
+  { ID_Entrega: 1, Fecha_Entrega: '2026-11-05', Responsable: 'Laura Méndez',
+    Estado: 'Programada', Observaciones: 'Despensa básica.', ID_Solicitud: 1 },
+  { ID_Entrega: 2, Fecha_Entrega: '2026-10-28', Responsable: 'Pedro Ruiz',
+    Estado: 'Entregada', Observaciones: '', ID_Solicitud: 4 }
 ];
 
 // Organizaciones
@@ -184,4 +205,34 @@ export async function obtenerPreferencia(id) {
 
 export async function obtenerAlergias(idUsuario) {
   return alergias.filter((alergia) => alergia.ID_Usuario === Number(idUsuario));
+}
+
+//Organización: solicitudes recibidas
+function solicitudesDeMiOrganizacion() {
+  return solicitudes.filter((s) => s.ID_Organizacion === ID_ORGANIZACION_ACTUAL);
+}
+
+function agregarFamilia(solicitud) {
+  const b = beneficiarios.find((item) => item.ID_Beneficiario === solicitud.ID_Beneficiario);
+  return { ...solicitud, Familia: b ? `${b.Nombre_Beneficiario} ${b.Apaterno}` : 'Desconocida' };
+}
+
+export async function obtenerSolicitudesOrganizacion() {
+  return solicitudesDeMiOrganizacion().map(agregarFamilia);
+}
+
+export async function obtenerSolicitudOrganizacion(id) {
+  const s = solicitudesDeMiOrganizacion().find((item) => item.ID_Solicitud === Number(id));
+  return s ? agregarFamilia(s) : undefined;
+}
+
+//Organización: entregas
+export async function obtenerEntregas() {
+  const ids = solicitudesDeMiOrganizacion().map((s) => s.ID_Solicitud);
+  return entregas.filter((e) => ids.includes(e.ID_Solicitud));
+}
+
+export async function obtenerEntrega(id) {
+  const lista = await obtenerEntregas();
+  return lista.find((e) => e.ID_Entrega === Number(id));
 }

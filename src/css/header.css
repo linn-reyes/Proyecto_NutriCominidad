@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espacio-s);
+  padding: var(--espacio-s) var(--espacio-m);
+  background-color: var(--color-blanco);
+  border-bottom: 3px solid var(--color-verde);
+  box-shadow: var(--sombra);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-xs);
+  text-decoration: none;
+}
+
+.header__imagen {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.header__nombre {
+  font-family: var(--fuente-titulos);
+  font-size: 1.4rem;
+  color: var(--color-verde);
+}
+
+.header__salir {
+  padding: var(--espacio-xs) var(--espacio-s);
+  border: 2px solid var(--color-naranja);
+  border-radius: var(--radio);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-naranja);
+}
+
+.header__salir:hover {
+  background-color: var(--color-naranja);
+  color: var(--color-blanco);
+}
