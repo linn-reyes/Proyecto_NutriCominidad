@@ -32,7 +32,7 @@ async function mostrarRecomendaciones() {
 
     const enlace = document.createElement('a');
     enlace.className = 'tarjeta__enlace';
-    enlace.href = `receta-detalle.html?id=${receta.ID_Receta}`;
+    enlace.href = `receta-detalle-cli.html?id=${receta.ID_Receta}`;
     enlace.textContent = 'Ver receta';
 
     tarjeta.append(titulo, costo, ingredientes, enlace);

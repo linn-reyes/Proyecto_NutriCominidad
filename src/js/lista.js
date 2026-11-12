@@ -13,7 +13,7 @@ const modulos = {
   recetas: {
     obtener: obtenerRecetas,
     id: 'ID_Receta',
-    detalle: 'receta-detalle.html',
+    detalle: 'receta-detalle-cli.html',
     columnas: (receta) => [
       receta.Nombre_Receta,
       `${receta.Tiempo_Preparacion} min`,
@@ -24,7 +24,7 @@ const modulos = {
   solicitudes: {
     obtener: obtenerSolicitudes,
     id: 'ID_Solicitud',
-    detalle: 'solicitud-detalle.html',
+    detalle: 'solicitud-detalle-cli.html',
     columnas: (solicitud) => [
       solicitud.Fecha_Solicitud,
       solicitud.Motivo,
@@ -36,7 +36,7 @@ const modulos = {
   preferencias: {
     obtener: obtenerPreferencias,
     id: 'ID_Preferencia',
-    detalle: 'preferencia-detalle.html',
+    detalle: 'preferencia-detalle-cli.html',
     columnas: (preferencia) => [
       preferencia.Tipo,
       preferencia.Descripcion,

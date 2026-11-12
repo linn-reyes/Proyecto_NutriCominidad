@@ -18,12 +18,12 @@ const modulos = {
   solicitudes: {
     obtener: obtenerSolicitud,
     tituloEditar: 'Editar solicitud',
-    lista: 'solicitudes.html'
+    lista: 'solicitudes-clientes.html'
   },
   preferencias: {
     obtener: obtenerPreferencia,
     tituloEditar: 'Editar preferencia',
-    lista: 'preferencias.html'
+    lista: 'preferencias-clientes.html'
   }
 };
 
