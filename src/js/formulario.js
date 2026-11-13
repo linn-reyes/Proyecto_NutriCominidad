@@ -6,7 +6,10 @@ import {
   obtenerAlergias,
   obtenerSolicitudOrganizacion,
   obtenerEntrega,
-  obtenerSolicitudesOrganizacion
+  obtenerSolicitudesOrganizacion,
+  obtenerInventario, 
+  obtenerDonacion,
+  obtenerAlimentos
 } from './datos.js';
 
 cargarPartials();
@@ -37,6 +40,16 @@ const modulos = {
     obtener: obtenerEntrega,
     tituloEditar: "Editar entrega",
     lista: "entregas-org.html",
+  },
+    inventarios: {
+    obtener: obtenerInventario,
+    tituloEditar: "Editar producto",
+    lista: "inventarios-com.html",
+  },
+  donaciones: {
+    obtener: obtenerDonacion,
+    tituloEditar: "Editar donación",
+    lista: "donaciones-com.html",
   }
 };
 
@@ -73,6 +86,21 @@ async function cargarOrganizaciones() {
     const opcion = document.createElement('option');
     opcion.value = s.ID_Solicitud;
     opcion.textContent = `#${s.ID_Solicitud} · ${s.Familia}`;
+    select.appendChild(opcion);
+  });
+}
+
+async function cargarAlimentos() {
+  const select = document.querySelector("#ID_Alimento");
+  if (!select) {
+    return;
+  }
+
+  const alimentos = await obtenerAlimentos();
+  alimentos.forEach((alimento) => {
+    const opcion = document.createElement("option");
+    opcion.value = alimento.ID_Alimento;
+    opcion.textContent = `${alimento.Nombre_Alimento} (${alimento.Unidad_Medida})`;
     select.appendChild(opcion);
   });
 }
@@ -136,6 +164,7 @@ formulario.addEventListener("submit", (evento) => {
 async function iniciar() {
   await cargarOrganizaciones();
   await cargarSolicitudesOrganizacion();
+  await cargarAlimentos();
   await prepararEdicion();
 }
 

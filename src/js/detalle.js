@@ -6,7 +6,9 @@ import {
   obtenerIngredientes,
   obtenerAlergias,
   obtenerSolicitudOrganizacion,
-  obtenerEntrega
+  obtenerEntrega,
+  obtenerInventarios,
+  obtenerDonaciones
 } from './datos.js';
 
 cargarPartials();
@@ -65,6 +67,25 @@ const modulos = {
       ["Responsable", e.Responsable],
       ["Estado", e.Estado],
       ["Observaciones", e.Observaciones || "Sin observaciones"],
+    ],
+  },
+    inventarios: {
+    obtener: obtenerInventario,
+    titulo: (i) => i.Nombre_Alimento,
+    campos: (i) => [
+      ['Cantidad disponible', `${i.Cantidad} ${i.Unidad_Medida}`],
+      ['Estado', i.Estado],
+      ['Última actualización', i.Fecha_Actualizacion],
+    ],
+  },
+  donaciones: {
+    obtener: obtenerDonacion,
+    titulo: (d) => `Donación del ${d.Fecha_Donacion}`,
+    campos: (d) => [
+      ['Organización', d.Nombre_Org],
+      ['Cantidad total', d.Cantidad],
+      ['Estado', d.Estado],
+      ['Observaciones', d.Observaciones || 'Sin observaciones'],
     ],
   }
 };
