@@ -7,7 +7,7 @@ import {
   obtenerSolicitudOrganizacion,
   obtenerEntrega,
   obtenerSolicitudesOrganizacion,
-  obtenerInventario, 
+  obtenerInventario,
   obtenerDonacion,
   obtenerAlimentos
 } from './datos.js';

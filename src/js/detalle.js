@@ -7,8 +7,8 @@ import {
   obtenerAlergias,
   obtenerSolicitudOrganizacion,
   obtenerEntrega,
-  obtenerInventarios,
-  obtenerDonaciones
+  obtenerInventario,
+  obtenerDonacion
 } from './datos.js';
 
 cargarPartials();
