@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Producto</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="inventarios">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="inventarios-com.html">&larr; Volver al inventario</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Nuevo producto</h2>
+            <p class="seccion__texto">Registra o actualiza un alimento de tu inventario.</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="ID_Alimento">Alimento:</label>
+                    <select class="formulario__select" id="ID_Alimento" name="ID_Alimento" required>
+                        <option value="">Selecciona un alimento</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Cantidad">Cantidad disponible:</label>
+                    <input class="formulario__input" type="number" id="Cantidad" name="Cantidad" min="0" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Fecha_Actualizacion">Fecha de actualización:</label>
+                    <input class="formulario__input" type="date" id="Fecha_Actualizacion" name="Fecha_Actualizacion" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Estado">Estado:</label>
+                    <select class="formulario__select" id="Estado" name="Estado" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Por agotarse">Por agotarse</option>
+                        <option value="Agotado">Agotado</option>
+                    </select>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="inventarios-com.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>

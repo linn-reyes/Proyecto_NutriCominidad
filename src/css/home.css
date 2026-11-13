@@ -1,0 +1,73 @@
+@import './global.css';
+@import './header.css';
+
+/* Contenido */
+.main {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding: var(--espacio-l) var(--espacio-s);
+}
+
+.bienvenida {
+  margin-bottom: var(--espacio-l);
+  padding: var(--espacio-l) var(--espacio-m);
+  text-align: center;
+  background-color: var(--color-verde-claro);
+  border-radius: var(--radio);
+}
+
+.bienvenida__titulo {
+  font-size: 2rem;
+  color: var(--color-verde-oscuro);
+}
+
+.bienvenida__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+/* Módulos */
+.modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--espacio-m);
+}
+
+.modulo {
+  display: block;
+  padding: var(--espacio-m);
+  background-color: var(--color-blanco);
+  border: 2px solid transparent;
+  border-top: 5px solid var(--color-turquesa);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  text-decoration: none;
+  color: var(--color-texto);
+}
+
+.modulo:hover {
+  border-color: var(--color-turquesa);
+  color: var(--color-texto);
+}
+
+.modulo__titulo {
+  margin-bottom: var(--espacio-xs);
+  font-size: 1.3rem;
+  color: var(--color-verde);
+}
+
+.modulo__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .bienvenida__titulo {
+    font-size: 1.5rem;
+  }
+}

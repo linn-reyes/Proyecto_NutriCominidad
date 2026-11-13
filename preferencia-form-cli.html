@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Preferencia alimentaria</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="preferencias">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="preferencias-clientes.html">&larr; Volver a preferencias</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Nueva preferencia</h2>
+            <p class="seccion__texto">Esta información es voluntaria y no sustituye la valoración de un profesional de nutrición.</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Tipo">Tipo de preferencia:</label>
+                    <select class="formulario__select" id="Tipo" name="Tipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Vegetariana">Vegetariana</option>
+                        <option value="Vegana">Vegana</option>
+                        <option value="Sin gluten">Sin gluten</option>
+                        <option value="Sin lactosa">Sin lactosa</option>
+                        <option value="Económica">Económica</option>
+                        <option value="Otra">Otra</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Descripcion">Descripción:</label>
+                    <textarea class="formulario__input" id="Descripcion" name="Descripcion" rows="3" minlength="5" maxlength="200" placeholder="Explica tu preferencia" required></textarea>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Nombre_Alergia">Alergia declarada (opcional):</label>
+                    <input class="formulario__input" type="text" id="Nombre_Alergia" name="Nombre_Alergia" maxlength="60" placeholder="Ejemplo: cacahuate">
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Observaciones">Observaciones (opcional):</label>
+                    <textarea class="formulario__input" id="Observaciones" name="Observaciones" rows="3" maxlength="200"></textarea>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="preferencias-clientes.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>

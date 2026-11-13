@@ -1,0 +1,130 @@
+@import './global.css';
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  padding: var(--espacio-m) var(--espacio-s) 0;
+}
+
+.header__imagen {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--espacio-m) var(--espacio-s) var(--espacio-l);
+}
+
+.seccion {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--espacio-l) var(--espacio-m);
+  background-color: var(--color-blanco);
+  border-top: 6px solid var(--color-verde);
+  border-radius: var(--radio);
+  box-shadow: 0 8px 24px rgba(31, 45, 36, 0.12);
+}
+
+.seccion__titulo {
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--color-verde);
+}
+
+.seccion__texto {
+  margin: 0 0 var(--espacio-m);
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-s);
+}
+
+.formulario__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formulario__etiqueta {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.formulario__input,
+.formulario__select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--espacio-s);
+  font: inherit;
+  color: var(--color-texto);
+  background-color: var(--color-crema);
+  border: 2px solid #C9D6CD;
+  border-radius: var(--radio);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario__input::placeholder {
+  color: #7A8A80;
+}
+
+.formulario__input:focus,
+.formulario__select:focus {
+  outline: none;
+  border-color: var(--color-verde);
+  box-shadow: 0 0 0 4px var(--color-verde-claro);
+}
+
+.formulario__input:user-invalid,
+.formulario__select:user-invalid {
+  border-color: var(--color-naranja-oscuro);
+}
+
+.formulario__boton {
+  width: 100%;
+  min-height: 48px;
+  margin-top: var(--espacio-xs);
+  font: inherit;
+  font-weight: 700;
+  color: var(--color-blanco);
+  background-color: var(--color-naranja-oscuro);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.formulario__boton:hover {
+  background-color: var(--color-naranja);
+}
+
+.formulario__boton:focus-visible {
+  outline: 3px solid var(--color-verde);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    align-items: center;
+  }
+
+  .seccion {
+    padding: var(--espacio-l);
+  }
+}

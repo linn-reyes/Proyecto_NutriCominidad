@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Solicitud</title>
+    <link rel="stylesheet" href="./src/css/formulario.css" />
+  </head>
+
+  <body data-modulo="solicitudes-org">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="solicitudes-org.html"
+        >&larr; Volver a solicitudes</a
+      >
+
+      <section class="seccion">
+        <h2 class="seccion__titulo" id="titulo">Cambiar estado de solicitud</h2>
+        <p class="seccion__texto">
+          Completa los siguientes campos para cambiar el estado de la solicitud.
+        </p>
+
+        <form class="formulario" id="formulario" action="#" method="post">
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Prioridad"
+              >Prioridad:</label
+            >
+            <select
+              class="formulario__select"
+              id="Prioridad"
+              name="Prioridad"
+              required
+            >
+              <option value="">Selecciona una opción</option>
+              <option value="Baja">Baja</option>
+              <option value="Media">Media</option>
+              <option value="Alta">Alta</option>
+            </select>
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Estado">Estado:</label>
+            <select
+              class="formulario__select"
+              id="Estado"
+              name="Estado"
+              required
+            >
+              <option value="">Selecciona una opción</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En revisión">En revisión</option>
+              <option value="Atendida">Atendida</option>
+              <option value="Rechazada">Rechazada</option>
+            </select>
+          </div>
+
+          <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+          <div class="formulario__acciones">
+            <button class="formulario__boton" type="submit">Guardar</button>
+            <a class="formulario__cancelar" href="solicitudes-org.html">Cancelar</a>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+  </body>
+</html>

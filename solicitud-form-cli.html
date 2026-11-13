@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Solicitud</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="solicitudes">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="solicitudes-clientes.html">&larr; Volver a solicitudes</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Nueva solicitud</h2>
+            <p class="seccion__texto">Cuéntanos qué apoyo alimentario necesitas.</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Fecha_Solicitud">Fecha de solicitud:</label>
+                    <input class="formulario__input" type="date" id="Fecha_Solicitud" name="Fecha_Solicitud" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="ID_Organizacion">Organización:</label>
+                    <select class="formulario__select" id="ID_Organizacion" name="ID_Organizacion" required>
+                        <option value="">Selecciona una organización</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Motivo">Motivo:</label>
+                    <textarea class="formulario__input" id="Motivo" name="Motivo" rows="4" minlength="10" maxlength="300" placeholder="Describe brevemente tu situación" required></textarea>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Integrantes">Número de integrantes de la familia:</label>
+                    <input class="formulario__input" type="number" id="Integrantes" name="Integrantes" min="1" max="20" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Prioridad">Prioridad:</label>
+                    <select class="formulario__select" id="Prioridad" name="Prioridad" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="solicitudes-clientes.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>

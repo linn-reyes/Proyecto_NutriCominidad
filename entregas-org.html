@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Entregas</title>
+    <link rel="stylesheet" href="./src/css/lista.css">
+</head>
+
+<body data-modulo="entregas">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="home-organizacion.html">&larr; Volver al inicio</a>
+
+        <section class="encabezado">
+            <h2 class="encabezado__titulo">Entregas</h2>
+            <p class="encabezado__texto">Apoyos entregados a las familias que te enviaron solicitudes.</p>
+            <a class="encabezado__boton" href="entrega-form-org.html">Nueva entrega</a>
+        </section>
+
+        <p class="mensaje" id="mensaje-vacio" hidden>No hay entregas registradas.</p>
+
+        <div class="tabla">
+            <table class="tabla__tabla">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Responsable</th>
+                        <th>Estado</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="lista"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/lista.js"></script>
+</body>
+
+</html>
