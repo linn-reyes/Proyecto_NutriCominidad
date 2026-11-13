@@ -119,4 +119,4 @@ async function mostrarLista() {
   });
 }
 
-mostrarLista();
+await mostrarLista();
