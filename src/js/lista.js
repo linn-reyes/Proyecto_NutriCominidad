@@ -4,7 +4,9 @@ import {
   obtenerSolicitudes,
   obtenerPreferencias,
   obtenerSolicitudesOrganizacion,
-  obtenerEntregas
+  obtenerEntregas,
+  obtenerInventarios,
+  obtenerDonaciones
 } from './datos.js';
 
 cargarPartials();
@@ -66,6 +68,23 @@ const modulos = {
     id: "ID_Entrega",
     detalle: "entrega-detalle-org.html",
     columnas: (e) => [e.Fecha_Entrega, e.Responsable, e.Estado],
+  },
+    inventarios: {
+    obtener: obtenerInventarios,
+    id: "ID_Inventario",
+    detalle: "inventario-detalle-com.html",
+    columnas: (i) => [
+      i.Nombre_Alimento,
+      `${i.Cantidad} ${i.Unidad_Medida}`,
+      i.Estado,
+      i.Fecha_Actualizacion,
+    ],
+  },
+  donaciones: {
+    obtener: obtenerDonaciones,
+    id: "ID_Donacion",
+    detalle: "donacion-detalle-com.html",
+    columnas: (d) => [d.Fecha_Donacion, d.Nombre_Org, d.Cantidad, d.Estado],
   }
 };
 
