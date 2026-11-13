@@ -170,4 +170,4 @@ async function mostrarDetalle() {
   }
 }
 
-mostrarDetalle();
+await mostrarDetalle();

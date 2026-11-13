@@ -168,4 +168,4 @@ async function iniciar() {
   await prepararEdicion();
 }
 
-iniciar();
+await iniciar();
