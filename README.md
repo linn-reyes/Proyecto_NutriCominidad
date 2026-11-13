@@ -13,7 +13,7 @@ NutriComunidad busca:
 
 Esta versión es el maquetado del sistema, con datos de ejemplo guardados en arreglos de objetos de JavaScript. En una siguiente etapa se conectará a una API.
 
-**Sitio publicado:** [enlace de Vercel]
+**Sitio publicado:** https://proyecto-nutri-cominidad.vercel.app
 
 ## Tecnologías Utilizadas
 
