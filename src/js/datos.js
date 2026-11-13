@@ -1,6 +1,7 @@
 const ID_USUARIO_ACTUAL = 1;
 const ID_BENEFICIARIO_ACTUAL = 1;
 const ID_ORGANIZACION_ACTUAL = 1;
+const ID_COMERCIO_ACTUAL = 1;
 
 const organizaciones = [
   { ID_Organizacion: 1, Nombre_Org: 'Banco de Alimentos Esperanza' },
@@ -138,6 +139,22 @@ const entregas = [
     Estado: 'Entregada', Observaciones: '', ID_Solicitud: 4 }
 ];
 
+const inventarios = [
+  { ID_Inventario: 1, Cantidad: 40, Fecha_Actualizacion: '2026-11-10', Estado: 'Disponible', ID_Comercio: 1, ID_Alimento: 1 },
+  { ID_Inventario: 2, Cantidad: 25, Fecha_Actualizacion: '2026-11-11', Estado: 'Disponible', ID_Comercio: 1, ID_Alimento: 7 },
+  { ID_Inventario: 3, Cantidad: 6, Fecha_Actualizacion: '2026-11-09', Estado: 'Por agotarse', ID_Comercio: 1, ID_Alimento: 3 },
+  { ID_Inventario: 4, Cantidad: 15, Fecha_Actualizacion: '2026-11-08', Estado: 'Disponible', ID_Comercio: 2, ID_Alimento: 2 }
+];
+
+const donaciones = [
+  { ID_Donacion: 1, Fecha_Donacion: '2026-11-03', Cantidad: 20, Estado: 'Entregada',
+    Observaciones: 'Arroz y frijol en buen estado.', ID_Comercio: 1, ID_Organizacion: 1 },
+  { ID_Donacion: 2, Fecha_Donacion: '2026-11-10', Cantidad: 12, Estado: 'Pendiente',
+    Observaciones: '', ID_Comercio: 1, ID_Organizacion: 2 },
+  { ID_Donacion: 3, Fecha_Donacion: '2026-11-05', Cantidad: 8, Estado: 'Entregada',
+    Observaciones: 'Verdura de temporada.', ID_Comercio: 2, ID_Organizacion: 3 }
+];
+
 // Organizaciones
 export async function obtenerOrganizaciones() {
   return organizaciones;
@@ -235,4 +252,45 @@ export async function obtenerEntregas() {
 export async function obtenerEntrega(id) {
   const lista = await obtenerEntregas();
   return lista.find((e) => e.ID_Entrega === Number(id));
+}
+
+// ---- Comercio: inventario ----
+function agregarAlimento(registro) {
+  const a = alimentos.find((item) => item.ID_Alimento === registro.ID_Alimento);
+  return {
+    ...registro,
+    Nombre_Alimento: a ? a.Nombre_Alimento : 'Desconocido',
+    Unidad_Medida: a ? a.Unidad_Medida : ''
+  };
+}
+
+export async function obtenerAlimentos() {
+  return alimentos;
+}
+
+export async function obtenerInventarios() {
+  return inventarios
+    .filter((i) => i.ID_Comercio === ID_COMERCIO_ACTUAL)
+    .map(agregarAlimento);
+}
+
+export async function obtenerInventario(id) {
+  const i = inventarios.find(
+    (item) => item.ID_Inventario === Number(id) && item.ID_Comercio === ID_COMERCIO_ACTUAL
+  );
+  return i ? agregarAlimento(i) : undefined;
+}
+
+// ---- Comercio: donaciones ----
+export async function obtenerDonaciones() {
+  return donaciones
+    .filter((d) => d.ID_Comercio === ID_COMERCIO_ACTUAL)
+    .map(agregarOrganizacion);
+}
+
+export async function obtenerDonacion(id) {
+  const d = donaciones.find(
+    (item) => item.ID_Donacion === Number(id) && item.ID_Comercio === ID_COMERCIO_ACTUAL
+  );
+  return d ? agregarOrganizacion(d) : undefined;
 }
