@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Entrega</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="entregas">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="entregas-org.html">&larr; Volver a entregas</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Nueva entrega</h2>
+            <p class="seccion__texto">Registra el apoyo entregado a una familia.</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="ID_Solicitud">Solicitud:</label>
+                    <select class="formulario__select" id="ID_Solicitud" name="ID_Solicitud" required>
+                        <option value="">Selecciona una solicitud</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Fecha_Entrega">Fecha de entrega:</label>
+                    <input class="formulario__input" type="date" id="Fecha_Entrega" name="Fecha_Entrega" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Responsable">Responsable:</label>
+                    <input class="formulario__input" type="text" id="Responsable" name="Responsable" minlength="3" maxlength="80" placeholder="Nombre de quien entrega" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Estado">Estado:</label>
+                    <select class="formulario__select" id="Estado" name="Estado" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Programada">Programada</option>
+                        <option value="Entregada">Entregada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Observaciones">Observaciones (opcional):</label>
+                    <textarea class="formulario__input" id="Observaciones" name="Observaciones" rows="3" maxlength="200"></textarea>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="entregas-org.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>

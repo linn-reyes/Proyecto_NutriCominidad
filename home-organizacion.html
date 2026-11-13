@@ -1,45 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NutriComunidad - Inicio Organización</title>
-    <link rel="stylesheet" href="./src/css/home.css">
-</head>
+    <link rel="stylesheet" href="./src/css/home.css" />
+  </head>
 
-<body>
-
+  <body>
     <div id="header-container"></div>
 
     <main class="main">
-        <section class="bienvenida">
-            <h2 class="bienvenida__titulo">Panel de la organización</h2>
-            <p class="bienvenida__texto">Consulta los alimentos disponibles y distribúyelos entre las familias.</p>
-        </section>
+      <section class="bienvenida">
+        <h2 class="bienvenida__titulo">Panel de la organización</h2>
+        <p class="bienvenida__texto">
+          Consulta las solicitudes de apoyo alimentario recibidas y gestiona las entregas realizadas a las familias.
+        </p>
+      </section>
 
-        <section class="modulos">
-            <a class="modulo" href="alimentos.html">
-                <h3 class="modulo__titulo">Alimentos disponibles</h3>
-                <p class="modulo__texto">Explora los productos que ofrecen los comercios.</p>
-            </a>
-            <a class="modulo" href="solicitudes.html">
-                <h3 class="modulo__titulo">Solicitudes</h3>
-                <p class="modulo__texto">Administra las solicitudes de apoyo alimentario.</p>
-            </a>
-            <a class="modulo" href="entregas.html">
-                <h3 class="modulo__titulo">Entregas</h3>
-                <p class="modulo__texto">Controla los apoyos entregados a las familias.</p>
-            </a>
-            <a class="modulo" href="reportes.html">
-                <h3 class="modulo__titulo">Reportes</h3>
-                <p class="modulo__texto">Estadísticas de alimentos recuperados y beneficiarios.</p>
-            </a>
-        </section>
+      <section class="modulos">
+        <a class="modulo" href="solicitudes-org.html">
+          <h3 class="modulo__titulo">Solicitudes recibidas</h3>
+          <p class="modulo__texto">
+            Revisa y actualiza las solicitudes de apoyo de las familias.
+          </p>
+        </a>
+        <a class="modulo" href="entregas-org.html">
+          <h3 class="modulo__titulo">Entregas</h3>
+          <p class="modulo__texto">
+            Registra y controla los apoyos entregados.
+          </p>
+        </a>
+      </section>
     </main>
 
     <div id="footer-container"></div>
 
     <script type="module" src="./src/js/home.js"></script>
-</body>
+  </body>
 </html>
