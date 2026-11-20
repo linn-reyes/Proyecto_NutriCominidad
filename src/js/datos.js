@@ -1,6 +1,6 @@
 const ID_USUARIO_ACTUAL = 1;
 const ID_BENEFICIARIO_ACTUAL = 1;
-const ID_ORGANIZACION_ACTUAL = 1;
+const ID_ORGANIZACION_ACTUAL = 2;
 const ID_COMERCIO_ACTUAL = 1;
 
 // ---- Usuarios y roles ----
