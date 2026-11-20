@@ -159,29 +159,7 @@ function pintarDatos(config, registro) {
   });
 }
 
-async function mostrarDetalle() {
-  const config = modulos[modulo];
-  const registro = await config.obtener(id);
-
-  if (!registro) {
-    document.querySelector("#mensaje-no-existe").hidden = false;
-    document.querySelectorAll(".detalle").forEach((seccion) => {
-      seccion.hidden = true;
-    });
-    return;
-  }
-
-  if (modulo === "donaciones-org") {
-  await mostrarAlimentosDonados();
-  prepararConfirmacion(config, registro);
-  }
-
-  document.querySelector("#titulo").textContent = config.titulo(registro);
-
-  pintarDatos(config, registro);
-  };
-
-  async function mostrarAlimentosDonados() {
+async function mostrarAlimentosDonados() {
   const alimentos = await obtenerDetallesDonacion(id);
 
   if (alimentos.length === 0) {
@@ -218,6 +196,21 @@ function prepararConfirmacion(config, registro) {
   });
 }
 
+async function mostrarDetalle() {
+  const config = modulos[modulo];
+  const registro = await config.obtener(id);
+
+  if (!registro) {
+    document.querySelector("#mensaje-no-existe").hidden = false;
+    document.querySelectorAll(".detalle").forEach((seccion) => {
+      seccion.hidden = true;
+    });
+    return;
+  }
+
+  document.querySelector("#titulo").textContent = config.titulo(registro);
+  pintarDatos(config, registro);
+
   // El botón Editar lleva el mismo id al formulario
   const botonEditar = document.querySelector("#boton-editar");
   if (botonEditar) {
@@ -230,5 +223,10 @@ function prepararConfirmacion(config, registro) {
   if (modulo === "preferencias") {
     await mostrarAlergias(registro.ID_Usuario);
   }
+  if (modulo === "donaciones-org") {
+    await mostrarAlimentosDonados();
+    prepararConfirmacion(config, registro);
+  }
+}
 
 await mostrarDetalle();

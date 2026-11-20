@@ -9,9 +9,7 @@ import {
   obtenerSolicitudesOrganizacion,
   obtenerInventario,
   obtenerDonacion,
-  obtenerAlimentos,
-  obtenerDonaciones,
-  obtenerDonacionesRecibidas,
+  obtenerAlimentos
 } from "./datos.js";
 
 cargarPartials();
@@ -52,17 +50,6 @@ const modulos = {
     obtener: obtenerDonacion,
     tituloEditar: "Editar donación",
     lista: "donaciones-com.html",
-  },
-  "donaciones-org": {
-    obtener: obtenerDonacionesRecibidas,
-    id: "ID_Donacion",
-    detalle: "donacion-detalle-org.html",
-    columnas: (d) => [
-      d.Fecha_Donacion,
-      d.Nombre_Comercio,
-      d.Cantidad,
-      d.Estado,
-    ],
   }
 };
 
