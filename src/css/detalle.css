@@ -54,7 +54,6 @@
   text-decoration: none;
   color: var(--color-blanco);
   border: none;
-  font: inherit;
   cursor: pointer;
 }
 
