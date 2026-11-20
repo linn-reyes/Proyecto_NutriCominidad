@@ -8,8 +8,11 @@ import {
   obtenerSolicitudOrganizacion,
   obtenerEntrega,
   obtenerInventario,
-  obtenerDonacion
-} from './datos.js';
+  obtenerDonacion,
+  obtenerDonacionRecibida,
+  obtenerDetallesDonacion,
+  confirmarRecepcion,
+} from "./datos.js";
 
 cargarPartials();
 
@@ -69,23 +72,34 @@ const modulos = {
       ["Observaciones", e.Observaciones || "Sin observaciones"],
     ],
   },
-    inventarios: {
+  inventarios: {
     obtener: obtenerInventario,
     titulo: (i) => i.Nombre_Alimento,
     campos: (i) => [
-      ['Cantidad disponible', `${i.Cantidad} ${i.Unidad_Medida}`],
-      ['Estado', i.Estado],
-      ['Última actualización', i.Fecha_Actualizacion],
+      ["Cantidad disponible", `${i.Cantidad} ${i.Unidad_Medida}`],
+      ["Estado", i.Estado],
+      ["Última actualización", i.Fecha_Actualizacion],
     ],
   },
   donaciones: {
     obtener: obtenerDonacion,
     titulo: (d) => `Donación del ${d.Fecha_Donacion}`,
     campos: (d) => [
-      ['Organización', d.Nombre_Org],
-      ['Cantidad total', d.Cantidad],
-      ['Estado', d.Estado],
-      ['Observaciones', d.Observaciones || 'Sin observaciones'],
+      ["Organización", d.Nombre_Org],
+      ["Cantidad total", d.Cantidad],
+      ["Estado", d.Estado],
+      ["Observaciones", d.Observaciones || "Sin observaciones"],
+    ],
+  },
+  "donaciones-org": {
+    obtener: obtenerDonacionRecibida,
+    titulo: (d) => `Donación de ${d.Nombre_Comercio}`,
+    campos: (d) => [
+      ["Fecha", d.Fecha_Donacion],
+      ["Comercio", d.Nombre_Comercio],
+      ["Cantidad total", d.Cantidad],
+      ["Estado", d.Estado],
+      ["Observaciones", d.Observaciones || "Sin observaciones"],
     ],
   }
 };
@@ -133,6 +147,18 @@ async function mostrarAlergias(idUsuario) {
   });
 }
 
+function pintarDatos(config, registro) {
+  const datos = document.querySelector("#datos");
+  datos.replaceChildren();
+  config.campos(registro).forEach(([etiqueta, valor]) => {
+    const dt = document.createElement("dt");
+    dt.textContent = etiqueta;
+    const dd = document.createElement("dd");
+    dd.textContent = valor;
+    datos.append(dt, dd);
+  });
+}
+
 async function mostrarDetalle() {
   const config = modulos[modulo];
   const registro = await config.obtener(id);
@@ -145,16 +171,52 @@ async function mostrarDetalle() {
     return;
   }
 
+  if (modulo === "donaciones-org") {
+  await mostrarAlimentosDonados();
+  prepararConfirmacion(config, registro);
+  }
+
   document.querySelector("#titulo").textContent = config.titulo(registro);
 
-  const datos = document.querySelector("#datos");
-  config.campos(registro).forEach(([etiqueta, valor]) => {
-    const dt = document.createElement("dt");
-    dt.textContent = etiqueta;
-    const dd = document.createElement("dd");
-    dd.textContent = valor;
-    datos.append(dt, dd);
+  pintarDatos(config, registro);
+  };
+
+  async function mostrarAlimentosDonados() {
+  const alimentos = await obtenerDetallesDonacion(id);
+
+  if (alimentos.length === 0) {
+    document.querySelector("#seccion-alimentos .tabla").hidden = true;
+    document.querySelector("#mensaje-sin-alimentos").hidden = false;
+    return;
+  }
+
+  const cuerpo = document.querySelector("#alimentos-donados");
+  alimentos.forEach((alimento) => {
+    const fila = document.createElement("tr");
+    fila.append(
+      crearCelda(alimento.Nombre_Alimento),
+      crearCelda(alimento.Cantidad),
+      crearCelda(alimento.Unidad_Medida),
+    );
+    cuerpo.appendChild(fila);
   });
+}
+
+function prepararConfirmacion(config, registro) {
+  if (registro.Estado !== "Pendiente") {
+    return; // si ya se entregó, el botón se queda oculto
+  }
+
+  const boton = document.querySelector("#boton-confirmar");
+  boton.hidden = false;
+
+  boton.addEventListener("click", async () => {
+    const actualizada = await confirmarRecepcion(id);
+    pintarDatos(config, actualizada);
+    boton.hidden = true;
+    document.querySelector("#mensaje-confirmado").hidden = false;
+  });
+}
 
   // El botón Editar lleva el mismo id al formulario
   const botonEditar = document.querySelector("#boton-editar");
@@ -168,6 +230,5 @@ async function mostrarDetalle() {
   if (modulo === "preferencias") {
     await mostrarAlergias(registro.ID_Usuario);
   }
-}
 
 await mostrarDetalle();
