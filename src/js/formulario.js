@@ -9,8 +9,10 @@ import {
   obtenerSolicitudesOrganizacion,
   obtenerInventario,
   obtenerDonacion,
-  obtenerAlimentos
-} from './datos.js';
+  obtenerAlimentos,
+  obtenerDonaciones,
+  obtenerDonacionesRecibidas,
+} from "./datos.js";
 
 cargarPartials();
 
@@ -41,7 +43,7 @@ const modulos = {
     tituloEditar: "Editar entrega",
     lista: "entregas-org.html",
   },
-    inventarios: {
+  inventarios: {
     obtener: obtenerInventario,
     tituloEditar: "Editar producto",
     lista: "inventarios-com.html",
@@ -50,6 +52,17 @@ const modulos = {
     obtener: obtenerDonacion,
     tituloEditar: "Editar donación",
     lista: "donaciones-com.html",
+  },
+  "donaciones-org": {
+    obtener: obtenerDonacionesRecibidas,
+    id: "ID_Donacion",
+    detalle: "donacion-detalle-org.html",
+    columnas: (d) => [
+      d.Fecha_Donacion,
+      d.Nombre_Comercio,
+      d.Cantidad,
+      d.Estado,
+    ],
   }
 };
 
@@ -75,15 +88,15 @@ async function cargarOrganizaciones() {
   });
 }
 
-  async function cargarSolicitudesOrganizacion() {
-  const select = document.querySelector('#ID_Solicitud');
+async function cargarSolicitudesOrganizacion() {
+  const select = document.querySelector("#ID_Solicitud");
   if (!select) {
     return;
   }
-  
+
   const solicitudesOrg = await obtenerSolicitudesOrganizacion();
   solicitudesOrg.forEach((s) => {
-    const opcion = document.createElement('option');
+    const opcion = document.createElement("option");
     opcion.value = s.ID_Solicitud;
     opcion.textContent = `#${s.ID_Solicitud} · ${s.Familia}`;
     select.appendChild(opcion);
