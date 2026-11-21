@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Familia</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="beneficiarios">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="beneficiarios-org.html">&larr; Volver a beneficiarios</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Registrar familia</h2>
+            <p class="seccion__texto">Registra a una familia para que pueda recibir apoyo alimentario.</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Nombre_Beneficiario">Nombre:</label>
+                    <input class="formulario__input" type="text" id="Nombre_Beneficiario" name="Nombre_Beneficiario" minlength="2" maxlength="50" autocomplete="given-name" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Apaterno">Apellido paterno:</label>
+                    <input class="formulario__input" type="text" id="Apaterno" name="Apaterno" minlength="2" maxlength="50" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Amaterno">Apellido materno:</label>
+                    <input class="formulario__input" type="text" id="Amaterno" name="Amaterno" minlength="2" maxlength="50" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Telefono_Beneficiario">Teléfono (10 dígitos):</label>
+                    <input class="formulario__input" type="tel" id="Telefono_Beneficiario" name="Telefono_Beneficiario" pattern="\d{10}" inputmode="numeric" maxlength="10" placeholder="2221234567" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Correo_Beneficiario">Correo (opcional):</label>
+                    <input class="formulario__input" type="email" id="Correo_Beneficiario" name="Correo_Beneficiario" maxlength="80" placeholder="ejemplo@correo.com">
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Integrantes">Integrantes de la familia:</label>
+                    <input class="formulario__input" type="number" id="Integrantes" name="Integrantes" min="1" max="20" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Calle">Calle:</label>
+                    <input class="formulario__input" type="text" id="Calle" name="Calle" maxlength="50" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Numero">Número:</label>
+                    <input class="formulario__input" type="number" id="Numero" name="Numero" min="1" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="ID_Colonia">Colonia:</label>
+                    <select class="formulario__select" id="ID_Colonia" name="ID_Colonia" required>
+                        <option value="">Selecciona una colonia</option>
+                    </select>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="beneficiarios-org.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>

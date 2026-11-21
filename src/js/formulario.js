@@ -9,7 +9,9 @@ import {
   obtenerSolicitudesOrganizacion,
   obtenerInventario,
   obtenerDonacion,
-  obtenerAlimentos
+  obtenerAlimentos,
+  obtenerBeneficiario,
+  obtenerColonias
 } from "./datos.js";
 
 cargarPartials();
@@ -45,6 +47,11 @@ const modulos = {
     obtener: obtenerInventario,
     tituloEditar: "Editar producto",
     lista: "inventarios-com.html",
+  },
+    beneficiarios: {
+    obtener: obtenerBeneficiario,
+    tituloEditar: "Editar familia",
+    lista: "beneficiarios-org.html",
   },
   donaciones: {
     obtener: obtenerDonacion,
@@ -101,6 +108,21 @@ async function cargarAlimentos() {
     const opcion = document.createElement("option");
     opcion.value = alimento.ID_Alimento;
     opcion.textContent = `${alimento.Nombre_Alimento} (${alimento.Unidad_Medida})`;
+    select.appendChild(opcion);
+  });
+}
+
+async function cargarColonias() {
+  const select = document.querySelector("#ID_Colonia");
+  if (!select) {
+    return;
+  }
+
+  const colonias = await obtenerColonias();
+  colonias.forEach((colonia) => {
+    const opcion = document.createElement("option");
+    opcion.value = colonia.ID_Colonia;
+    opcion.textContent = `${colonia.Nombre_Colonia}, ${colonia.Nombre_Municipio} (CP ${colonia.CP})`;
     select.appendChild(opcion);
   });
 }
@@ -165,6 +187,7 @@ async function iniciar() {
   await cargarOrganizaciones();
   await cargarSolicitudesOrganizacion();
   await cargarAlimentos();
+  await cargarColonias();
   await prepararEdicion();
 }
 

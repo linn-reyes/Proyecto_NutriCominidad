@@ -490,3 +490,18 @@ export async function confirmarRecepcion(id) {
   }
   return donacion ? agregarComercio(donacion) : undefined;
 }
+
+// ---- Organización: beneficiarios (familias) ----
+function agregarColonia(beneficiario) {
+  const colonia = colonias.find((c) => c.ID_Colonia === beneficiario.ID_Colonia);
+  return { ...beneficiario, Nombre_Colonia: colonia ? colonia.Nombre_Colonia : 'Desconocida' };
+}
+
+export async function obtenerBeneficiarios() {
+  return beneficiarios.map(agregarColonia);
+}
+
+export async function obtenerBeneficiario(id) {
+  const beneficiario = beneficiarios.find((b) => b.ID_Beneficiario === Number(id));
+  return beneficiario ? agregarColonia(beneficiario) : undefined;
+}

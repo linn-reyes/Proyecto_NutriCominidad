@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Beneficiarios</title>
+    <link rel="stylesheet" href="./src/css/lista.css">
+</head>
+
+<body data-modulo="beneficiarios">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="home-organizacion.html">&larr; Volver al inicio</a>
+
+        <section class="encabezado">
+            <h2 class="encabezado__titulo">Beneficiarios</h2>
+            <p class="encabezado__texto">Familias registradas para recibir apoyo alimentario.</p>
+            <a class="encabezado__boton" href="beneficiario-form-org.html">Registrar familia</a>
+        </section>
+
+        <p class="mensaje" id="mensaje-vacio" hidden>Aún no hay familias registradas.</p>
+
+        <div class="tabla">
+            <table class="tabla__tabla">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Integrantes</th>
+                        <th>Teléfono</th>
+                        <th>Colonia</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="lista"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/lista.js"></script>
+</body>
+
+</html>

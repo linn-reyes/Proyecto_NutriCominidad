@@ -12,6 +12,7 @@ import {
   obtenerDonacionRecibida,
   obtenerDetallesDonacion,
   confirmarRecepcion,
+  obtenerBeneficiario
 } from "./datos.js";
 
 cargarPartials();
@@ -89,6 +90,17 @@ const modulos = {
       ["Cantidad total", d.Cantidad],
       ["Estado", d.Estado],
       ["Observaciones", d.Observaciones || "Sin observaciones"],
+    ],
+  },
+    beneficiarios: {
+    obtener: obtenerBeneficiario,
+    titulo: (b) => `${b.Nombre_Beneficiario} ${b.Apaterno} ${b.Amaterno}`,
+    campos: (b) => [
+      ["Teléfono", b.Telefono_Beneficiario],
+      ["Correo", b.Correo_Beneficiario || "Sin correo"],
+      ["Integrantes de la familia", b.Integrantes],
+      ["Dirección", `${b.Calle} ${b.Numero}`],
+      ["Colonia", b.Nombre_Colonia],
     ],
   },
   "donaciones-org": {

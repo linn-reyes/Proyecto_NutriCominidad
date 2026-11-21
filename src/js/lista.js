@@ -7,7 +7,8 @@ import {
   obtenerEntregas,
   obtenerInventarios,
   obtenerDonaciones,
-  obtenerDonacionesRecibidas
+  obtenerDonacionesRecibidas,
+  obtenerBeneficiarios
 } from './datos.js';
 
 cargarPartials();
@@ -86,6 +87,17 @@ const modulos = {
     id: "ID_Donacion",
     detalle: "donacion-detalle-com.html",
     columnas: (d) => [d.Fecha_Donacion, d.Nombre_Org, d.Cantidad, d.Estado],
+  },
+    beneficiarios: {
+    obtener: obtenerBeneficiarios,
+    id: "ID_Beneficiario",
+    detalle: "beneficiario-detalle-org.html",
+    columnas: (b) => [
+      `${b.Nombre_Beneficiario} ${b.Apaterno} ${b.Amaterno}`,
+      b.Integrantes,
+      b.Telefono_Beneficiario,
+      b.Nombre_Colonia,
+    ],
   },
   "donaciones-org": {
     obtener: obtenerDonacionesRecibidas,

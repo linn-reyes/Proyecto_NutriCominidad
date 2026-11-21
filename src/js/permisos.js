@@ -32,6 +32,9 @@ export const permisos = {
   'entrega-form-org': ['organizacion'],
   'donaciones-org': ['organizacion'],
   'donacion-detalle-org': ['organizacion'],
+  'beneficiarios-org': ['organizacion'],
+  'beneficiario-detalle-org': ['organizacion'],
+  'beneficiario-form-org': ['organizacion']
 };
 
 // A dónde va cada rol al iniciar sesión
