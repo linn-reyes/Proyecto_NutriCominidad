@@ -13,7 +13,7 @@ import {
   obtenerDetallesDonacion,
   confirmarRecepcion,
   obtenerBeneficiario,
-  obtenerLote
+  obtenerLote,
 } from "./datos.js";
 
 cargarPartials();
@@ -93,7 +93,7 @@ const modulos = {
       ["Observaciones", d.Observaciones || "Sin observaciones"],
     ],
   },
-    beneficiarios: {
+  beneficiarios: {
     obtener: obtenerBeneficiario,
     titulo: (b) => `${b.Nombre_Beneficiario} ${b.Apaterno} ${b.Amaterno}`,
     campos: (b) => [
@@ -104,7 +104,7 @@ const modulos = {
       ["Colonia", b.Nombre_Colonia],
     ],
   },
-    lotes: {
+  lotes: {
     obtener: obtenerLote,
     titulo: (l) => `Lote de ${l.Nombre_Alimento}`,
     campos: (l) => [
@@ -126,7 +126,7 @@ const modulos = {
       ["Estado", d.Estado],
       ["Observaciones", d.Observaciones || "Sin observaciones"],
     ],
-  }
+  },
 };
 
 function crearCelda(texto) {
@@ -251,6 +251,16 @@ async function mostrarDetalle() {
   if (modulo === "donaciones-org") {
     await mostrarAlimentosDonados();
     prepararConfirmacion(config, registro);
+  }
+
+  // "Donar este lote" lleva el lote al formulario de donación
+  const botonDonar = document.querySelector("#boton-donar");
+  if (botonDonar) {
+    if (registro.Aviso === "Caducado") {
+      botonDonar.hidden = true; // un lote caducado no se dona
+    } else {
+      botonDonar.href = `${botonDonar.getAttribute("href")}?lote=${id}`;
+    }
   }
 }
 

@@ -1,34 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NutriComunidad - Detalle de lote</title>
-    <link rel="stylesheet" href="./src/css/detalle.css">
-</head>
+    <link rel="stylesheet" href="./src/css/detalle.css" />
+  </head>
 
-<body data-modulo="lotes">
-
+  <body data-modulo="lotes">
     <div id="header-container"></div>
 
     <main class="main">
-        <a class="main__volver" href="lotes-com.html">&larr; Volver a alimentos por caducar</a>
+      <a class="main__volver" href="lotes-com.html"
+        >&larr; Volver a alimentos por caducar</a
+      >
 
-        <p class="mensaje" id="mensaje-no-existe" hidden>El lote no existe.</p>
+      <p class="mensaje" id="mensaje-no-existe" hidden>El lote no existe.</p>
 
-        <section class="detalle" id="detalle">
-            <h2 class="detalle__titulo" id="titulo">Detalle del lote</h2>
-            <dl class="detalle__datos" id="datos"></dl>
-            <div class="detalle__acciones">
-                <a class="detalle__boton" id="boton-editar" href="lote-form-com.html">Editar</a>
-            </div>
-        </section>
+      <section class="detalle" id="detalle">
+        <h2 class="detalle__titulo" id="titulo">Detalle del lote</h2>
+        <dl class="detalle__datos" id="datos"></dl>
+        <div class="detalle__acciones">
+          <a
+            class="detalle__boton"
+            id="boton-donar"
+            href="donacion-form-com.html"
+            >Donar este lote</a
+          >
+        </div>
+      </section>
     </main>
 
     <div id="footer-container"></div>
 
     <script type="module" src="./src/js/detalle.js"></script>
-</body>
-
+  </body>
 </html>

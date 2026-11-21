@@ -109,3 +109,24 @@
   font-weight: 700;
   color: var(--color-texto-suave);
 }
+
+.formulario__grupo {
+  margin: 0 0 var(--espacio-s);
+  padding: var(--espacio-s);
+  border: 1px solid var(--color-verde-claro);
+  border-radius: var(--radio);
+}
+
+.formulario__grupo[hidden] {
+  display: none;
+}
+
+.formulario__ayuda {
+  margin: 0 0 var(--espacio-xs);
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+}
+
+.formulario__lote {
+  margin-bottom: var(--espacio-s);
+}

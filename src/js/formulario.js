@@ -13,7 +13,8 @@ import {
   obtenerBeneficiario,
   obtenerColonias,
   obtenerLote,
-  obtenerInventarios
+  obtenerInventarios,
+  obtenerLotes
 } from "./datos.js";
 
 cargarPartials();
@@ -166,6 +167,88 @@ async function cargarInventarios() {
   });
 }
 
+// ---- Donación: elegir de qué lotes se dona ----
+function entradasLotes() {
+  return [...document.querySelectorAll("[data-lote]")];
+}
+
+function actualizarTotal() {
+  const total = entradasLotes().reduce((suma, entrada) => suma + Number(entrada.value || 0), 0);
+  document.querySelector("#Cantidad").value = total;
+}
+
+async function cargarLotesDonacion() {
+  const contenedor = document.querySelector("#lista-lotes");
+  if (!contenedor) {
+    return;
+  }
+
+  const lotes = (await obtenerLotes()).filter((lote) => lote.Stock > 0 && lote.Aviso !== "Caducado");
+
+  if (lotes.length === 0) {
+    document.querySelector("#sin-lotes").hidden = false;
+    return;
+  }
+
+  lotes.forEach((lote) => {
+    const campo = document.createElement("div");
+    campo.className = "formulario__lote";
+
+    const etiqueta = document.createElement("label");
+    etiqueta.className = "formulario__etiqueta";
+    etiqueta.htmlFor = `lote-${lote.ID_Lote}`;
+    etiqueta.textContent = `${lote.Nombre_Alimento} · ${lote.Dias_Texto} · hay ${lote.Stock} ${lote.Unidad_Medida}`;
+
+    const entrada = document.createElement("input");
+    entrada.className = "formulario__input";
+    entrada.type = "number";
+    entrada.id = `lote-${lote.ID_Lote}`;
+    entrada.min = "0";
+    entrada.max = String(lote.Stock);
+    entrada.value = "0";
+    entrada.dataset.lote = lote.ID_Lote;
+    entrada.addEventListener("input", actualizarTotal);
+
+    campo.append(etiqueta, entrada);
+    contenedor.appendChild(campo);
+  });
+}
+
+// Si se viene desde "Donar este lote", ese lote ya aparece lleno
+function preseleccionarLote() {
+  const idLote = new URLSearchParams(window.location.search).get("lote");
+  if (!idLote) {
+    return;
+  }
+
+  const entrada = document.querySelector(`[data-lote="${CSS.escape(idLote)}"]`);
+  if (!entrada) {
+    return;
+  }
+
+  entrada.value = entrada.max;
+  entrada.focus();
+  actualizarTotal();
+}
+
+function validarDonacion() {
+  if (id) {
+    return null; // al editar, los alimentos no cambian
+  }
+
+  const entradas = entradasLotes();
+  if (entradas.length === 0) {
+    return "No tienes lotes disponibles para donar.";
+  }
+  if (entradas.some((entrada) => Number(entrada.value) > Number(entrada.max))) {
+    return "No puedes donar más de lo que hay en el lote.";
+  }
+  if (entradas.every((entrada) => Number(entrada.value || 0) === 0)) {
+    return "Escribe cuánto donas de al menos un lote.";
+  }
+  return null;
+}
+
 // Llena cada campo cuyo name coincide con una columna del registro
 function llenarFormulario(registro) {
   for (const campo of formulario.elements) {
@@ -198,6 +281,11 @@ async function prepararEdicion() {
       document.querySelector("#Nombre_Alergia").value =
         alergias[0].Nombre_Alergia;
     }
+  }
+
+    if (modulo === "donaciones") {
+    document.querySelector("#grupo-lotes").hidden = true;
+    document.querySelector("#aviso-edicion").hidden = false;
   }
 }
 
@@ -234,7 +322,9 @@ async function iniciar() {
   await cargarAlimentos();
   await cargarColonias();
   await cargarInventarios();
+  await cargarLotesDonacion();
   await prepararEdicion();
+  preseleccionarLote();
 }
 
 await iniciar();
