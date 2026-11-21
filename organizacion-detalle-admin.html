@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Validar organización</title>
+    <link rel="stylesheet" href="./src/css/detalle.css" />
+  </head>
+
+  <body data-modulo="organizaciones-admin">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="organizaciones-admin.html"
+        >&larr; Volver a organizaciones</a
+      >
+
+      <p class="mensaje" id="mensaje-no-existe" hidden>
+        La organización no existe.
+      </p>
+
+      <section class="detalle" id="detalle">
+        <h2 class="detalle__titulo" id="titulo">Detalle de la organización</h2>
+        <dl class="detalle__datos" id="datos"></dl>
+        <div class="detalle__acciones">
+          <button
+            class="detalle__boton"
+            id="boton-aprobar"
+            type="button"
+            hidden
+          >
+            Aprobar
+          </button>
+          <button
+            class="detalle__boton detalle__boton--secundario"
+            id="boton-rechazar"
+            type="button"
+            hidden
+          >
+            Rechazar
+          </button>
+        </div>
+        <p class="mensaje" id="mensaje-validacion" role="status" hidden></p>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/detalle.js"></script>
+  </body>
+</html>

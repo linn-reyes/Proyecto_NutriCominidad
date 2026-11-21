@@ -21,7 +21,9 @@ const usuarios = [
   { ID_Usuario: 4, ID_Rol: 3, Nombre_Usuario: 'Carmen', APaterno: 'Ruiz', Correo: 'carmen.ruiz@gmail.com',
     Telefono: '2224567890', Fecha_Registro: '2026-10-12', Estado_Usuario: 'Activo' },
   { ID_Usuario: 5, ID_Rol: 4, Nombre_Usuario: 'Laura', APaterno: 'Méndez', Correo: 'laura.mendez@gmail.com',
-    Telefono: '2225678901', Fecha_Registro: '2026-10-15', Estado_Usuario: 'Activo' }
+    Telefono: '2225678901', Fecha_Registro: '2026-10-15', Estado_Usuario: 'Activo' },
+  { ID_Usuario: 6, ID_Rol: 1, Nombre_Usuario: 'Sofía', APaterno: 'Castillo', Correo: 'sofia.castillo@gmail.com',
+    Telefono: '2226789900', Fecha_Registro: '2026-09-15', Estado_Usuario: 'Activo' }
 ];
 
 // ---- Ubicación ----
@@ -550,4 +552,34 @@ export async function obtenerBeneficiarios() {
 export async function obtenerBeneficiario(id) {
   const beneficiario = beneficiarios.find((b) => b.ID_Beneficiario === Number(id));
   return beneficiario ? agregarColonia(beneficiario) : undefined;
+}
+
+// ---- Administrador: validación de organizaciones ----
+function agregarResponsableCuenta(organizacion) {
+  const usuario = usuarios.find((u) => u.ID_Usuario === organizacion.ID_Usuario);
+  return {
+    ...agregarColonia(organizacion),
+    Cuenta: usuario ? `${usuario.Nombre_Usuario} ${usuario.APaterno}` : 'Sin cuenta',
+  };
+}
+
+// Primero las pendientes (en orden de llegada), luego activas y rechazadas
+export async function obtenerTodasOrganizaciones() {
+  const orden = { Pendiente: 0, Activa: 1, Rechazada: 2 };
+  return organizaciones
+    .map(agregarResponsableCuenta)
+    .sort((a, b) => orden[a.Estatus_Org] - orden[b.Estatus_Org]);
+}
+
+export async function obtenerOrganizacionAdmin(id) {
+  const organizacion = organizaciones.find((o) => o.ID_Organizacion === Number(id));
+  return organizacion ? agregarResponsableCuenta(organizacion) : undefined;
+}
+
+export async function cambiarEstatusOrganizacion(id, nuevoEstatus) {
+  const organizacion = organizaciones.find((o) => o.ID_Organizacion === Number(id));
+  if (organizacion?.Estatus_Org === 'Pendiente') {
+    organizacion.Estatus_Org = nuevoEstatus;
+  }
+  return organizacion ? agregarResponsableCuenta(organizacion) : undefined;
 }

@@ -10,6 +10,7 @@ import {
   obtenerDonacionesRecibidas,
   obtenerLotes,
   obtenerBeneficiarios,
+  obtenerTodasOrganizaciones
 } from "./datos.js";
 
 cargarPartials();
@@ -130,6 +131,13 @@ const modulos = {
       d.Cantidad,
       d.Estado,
     ],
+  },
+    "organizaciones-admin": {
+    obtener: obtenerTodasOrganizaciones,
+    id: "ID_Organizacion",
+    detalle: "organizacion-detalle-admin.html",
+    columnas: (o) => [o.Nombre_Org, o.Tipo_Org, o.Responsable, o.Estatus_Org],
+    clase: (o) => (o.Estatus_Org === "Pendiente" ? "tabla__fila--preferente" : undefined),
   },
 };
 

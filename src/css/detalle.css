@@ -71,3 +71,15 @@
     grid-template-columns: 200px 1fr;
   }
 }
+
+/* Acción secundaria (por ejemplo, Rechazar): menos llamativa que la principal */
+.detalle__boton--secundario {
+  background-color: var(--color-blanco);
+  border: 2px solid var(--color-naranja);
+  color: var(--color-naranja-oscuro);
+}
+
+.detalle__boton--secundario:hover {
+  background-color: var(--color-naranja);
+  color: var(--color-blanco);
+}

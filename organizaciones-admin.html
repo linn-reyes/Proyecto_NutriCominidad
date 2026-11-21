@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Organizaciones</title>
+    <link rel="stylesheet" href="./src/css/lista.css" />
+  </head>
+
+  <body data-modulo="organizaciones-admin">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="home-admin.html">&larr; Volver al inicio</a>
+
+      <section class="encabezado">
+        <h2 class="encabezado__titulo">Organizaciones</h2>
+        <p class="encabezado__texto">
+          Las pendientes aparecen primero, en el orden en que se registraron.
+        </p>
+      </section>
+
+      <p class="mensaje" id="mensaje-vacio" hidden>
+        No hay organizaciones registradas.
+      </p>
+
+      <div class="tabla">
+        <table class="tabla__tabla">
+          <thead>
+            <tr>
+              <th>Organización</th>
+              <th>Tipo</th>
+              <th>Responsable</th>
+              <th>Estatus</th>
+              <th>Detalle</th>
+            </tr>
+          </thead>
+          <tbody id="lista"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/lista.js"></script>
+  </body>
+</html>

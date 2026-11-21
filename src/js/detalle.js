@@ -14,6 +14,8 @@ import {
   confirmarRecepcion,
   obtenerBeneficiario,
   obtenerLote,
+  obtenerOrganizacionAdmin,
+  cambiarEstatusOrganizacion,
 } from "./datos.js";
 
 cargarPartials();
@@ -127,6 +129,19 @@ const modulos = {
       ["Observaciones", d.Observaciones || "Sin observaciones"],
     ],
   },
+  "organizaciones-admin": {
+    obtener: obtenerOrganizacionAdmin,
+    titulo: (o) => o.Nombre_Org,
+    campos: (o) => [
+      ["Estatus", o.Estatus_Org],
+      ["Tipo", o.Tipo_Org],
+      ["Responsable", o.Responsable],
+      ["Teléfono", o.Telefono_Org],
+      ["Correo", o.Correo_Org],
+      ["Dirección", `${o.Calle_Org} ${o.Numero_Org}, ${o.Nombre_Colonia}`],
+      ["Cuenta que la registró", o.Cuenta],
+    ],
+  },
 };
 
 function crearCelda(texto) {
@@ -221,6 +236,33 @@ function prepararConfirmacion(config, registro) {
   });
 }
 
+function prepararValidacion(config, registro) {
+  if (registro.Estatus_Org !== "Pendiente") {
+    return; // ya se validó: los botones se quedan ocultos
+  }
+
+  const botonAprobar = document.querySelector("#boton-aprobar");
+  const botonRechazar = document.querySelector("#boton-rechazar");
+  const mensaje = document.querySelector("#mensaje-validacion");
+
+  async function validar(nuevoEstatus) {
+    const actualizada = await cambiarEstatusOrganizacion(id, nuevoEstatus);
+    pintarDatos(config, actualizada);
+    botonAprobar.hidden = true;
+    botonRechazar.hidden = true;
+    mensaje.textContent =
+      nuevoEstatus === "Activa"
+        ? "Organización aprobada. Ya puede recibir donaciones."
+        : "Organización rechazada.";
+    mensaje.hidden = false;
+  }
+
+  botonAprobar.hidden = false;
+  botonRechazar.hidden = false;
+  botonAprobar.addEventListener("click", () => validar("Activa"));
+  botonRechazar.addEventListener("click", () => validar("Rechazada"));
+}
+
 async function mostrarDetalle() {
   const config = modulos[modulo];
   const registro = await config.obtener(id);
@@ -261,6 +303,10 @@ async function mostrarDetalle() {
     } else {
       botonDonar.href = `${botonDonar.getAttribute("href")}?lote=${id}`;
     }
+  }
+
+  if (modulo === "organizaciones-admin") {
+    prepararValidacion(config, registro);
   }
 }
 

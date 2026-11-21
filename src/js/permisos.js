@@ -37,7 +37,11 @@ export const permisos = {
   'donacion-detalle-org': ['organizacion'],
   'beneficiarios-org': ['organizacion'],
   'beneficiario-detalle-org': ['organizacion'],
-  'beneficiario-form-org': ['organizacion']
+  'beneficiario-form-org': ['organizacion'],
+  // Administrador
+  'home-admin': ['admin'],
+  'organizaciones-admin': ['admin'],
+  'organizacion-detalle-admin': ['admin'],
 };
 
 // A dónde va cada rol al iniciar sesión
@@ -45,6 +49,7 @@ export const inicioPorRol = {
   usuario: '/home.html',
   comercio: '/home-comercio.html',
   organizacion: '/home-organizacion.html',
+  admin: '/home-admin.html'
 };
 
 // "/inventarios-com.html" → "inventarios-com"
