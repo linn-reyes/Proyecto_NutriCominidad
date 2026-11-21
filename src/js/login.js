@@ -21,6 +21,7 @@ formulario.addEventListener('submit', async (evento) => {
 
         guardarSesion(respuesta.token, respuesta.user)
         const inicioPorRol = {
+          usuario: 'home.html',
           comercio: 'home-comercio.html',
           organizacion: 'home-organizacion.html',
         }
@@ -39,13 +40,6 @@ formulario.addEventListener('submit', async (evento) => {
 document.querySelector('#footer-container').innerHTML = footerHtml;
 
 const tipo = document.querySelector('#tipo');
-
-// Página a la que va cada tipo de sesión
-//const destinos = {
-  //usuario: 'home.html',
-  //comercio: 'home-comercio.html',
-  //organizacion: 'home-organizacion.html'
-// };
 
 formulario.addEventListener('submit', (evento) => {
   evento.preventDefault();

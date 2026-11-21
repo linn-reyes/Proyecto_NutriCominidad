@@ -19,5 +19,5 @@ export function obtenerUsuario() {
 
 export function cerrarSesion() {
     localStorage.removeItem(CLAVE)
-    location.href = 'login.html'
+    location.href = '/login.html'
 }

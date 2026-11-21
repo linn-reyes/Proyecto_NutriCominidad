@@ -1,7 +1,5 @@
-//Ajustar permisos de roles correctos
-
 export const permisos = {
-    usuarios: ['admin'],
+    home: ['usuario'],
     usuario: ['admin'],
 }
 
