@@ -611,3 +611,20 @@ export async function obtenerCategoriasConConteo() {
 export async function obtenerCategoria(id) {
   return categorias.find((c) => c.ID_Categoria === Number(id));
 }
+
+// ---- Usuario: alergias (tabla propia por la 4FN) ----
+export async function obtenerMisAlergias() {
+  return alergias.filter((a) => a.ID_Usuario === ID_USUARIO_ACTUAL);
+}
+
+export async function obtenerAlergia(id) {
+  return alergias.find((a) => a.ID_Alergia === Number(id) && a.ID_Usuario === ID_USUARIO_ACTUAL);
+}
+
+export async function eliminarAlergia(id) {
+  const indice = alergias.findIndex((a) => a.ID_Alergia === Number(id) && a.ID_Usuario === ID_USUARIO_ACTUAL);
+  if (indice !== -1) {
+    alergias.splice(indice, 1);
+  }
+  return indice !== -1;
+}

@@ -12,7 +12,8 @@ import {
   obtenerBeneficiarios,
   obtenerTodasOrganizaciones,
   obtenerCatalogoAlimentos,
-  obtenerCategoriasConConteo
+  obtenerCategoriasConConteo,
+  obtenerMisAlergias
 } from "./datos.js";
 
 cargarPartials();
@@ -159,6 +160,13 @@ const modulos = {
     id: "ID_Receta",
     detalle: "receta-detalle-admin.html",
     columnas: (r) => [r.Nombre_Receta, `${r.Tiempo_Preparacion} min`, r.Porciones, `$${r.Costo}`],
+  },
+    alergias: {
+    obtener: obtenerMisAlergias,
+    id: "ID_Alergia",
+    detalle: "alergia-form-cli.html",
+    textoEnlace: "Editar",
+    columnas: (a) => [a.Nombre_Alergia],
   },
 };
 

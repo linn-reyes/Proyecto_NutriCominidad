@@ -14,6 +14,8 @@ export const permisos = {
   'solicitudes-clientes': ['usuario'],
   'solicitud-detalle-cli': ['usuario'],
   'solicitud-form-cli': ['usuario'],
+  'alergias-cli': ['usuario'],
+  'alergia-form-cli': ['usuario'],
   // Comercio
   'home-comercio': ['comercio'],
   'inventarios-com': ['comercio'],

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Alergia</title>
+    <link rel="stylesheet" href="./src/css/formulario.css" />
+  </head>
+
+  <body data-modulo="alergias">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="alergias-cli.html"
+        >&larr; Volver a mis alergias</a
+      >
+
+      <section class="seccion">
+        <h2 class="seccion__titulo" id="titulo">Agregar alergia</h2>
+        <p class="seccion__texto">
+          Esta información es voluntaria y no sustituye la valoración de un
+          profesional de la salud.
+        </p>
+
+        <form class="formulario" id="formulario" action="#" method="post">
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Nombre_Alergia"
+              >Alimento al que eres alérgico(a):</label
+            >
+            <input
+              class="formulario__input"
+              type="text"
+              id="Nombre_Alergia"
+              name="Nombre_Alergia"
+              minlength="2"
+              maxlength="100"
+              placeholder="Ejemplo: cacahuate"
+              required
+            />
+          </div>
+
+          <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+          <div class="formulario__acciones">
+            <button class="formulario__boton" type="submit">Guardar</button>
+            <button
+              class="formulario__secundario"
+              id="boton-eliminar"
+              type="button"
+              hidden
+            >
+              Eliminar
+            </button>
+            <a class="formulario__cancelar" href="alergias-cli.html"
+              >Cancelar</a
+            >
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+  </body>
+</html>

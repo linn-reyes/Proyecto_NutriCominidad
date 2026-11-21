@@ -3,7 +3,6 @@ import {
   obtenerSolicitud,
   obtenerPreferencia,
   obtenerOrganizaciones,
-  obtenerAlergias,
   obtenerSolicitudOrganizacion,
   obtenerEntrega,
   obtenerSolicitudesOrganizacion,
@@ -19,7 +18,9 @@ import {
   obtenerCategoria,
   obtenerCategorias,
   obtenerReceta,
-  obtenerIngredientes
+  obtenerIngredientes,
+  obtenerAlergia,
+  eliminarAlergia
 } from "./datos.js";
 
 cargarPartials();
@@ -87,6 +88,12 @@ const modulos = {
     tituloEditar: "Editar receta",
     lista: "recetas-admin.html",
     validar: validarReceta,
+  },
+    alergias: {
+    obtener: obtenerAlergia,
+    tituloEditar: "Editar alergia",
+    lista: "alergias-cli.html",
+    eliminar: eliminarAlergia,
   },
 };
 
@@ -405,18 +412,33 @@ async function prepararEdicion() {
   titulo.textContent = config.tituloEditar;
   llenarFormulario(registro);
 
-  if (modulo === "preferencias") {
-    const alergias = await obtenerAlergias(registro.ID_Usuario);
-    if (alergias.length > 0) {
-      document.querySelector("#Nombre_Alergia").value =
-        alergias[0].Nombre_Alergia;
-    }
-  }
-
   if (modulo === "donaciones") {
     document.querySelector("#grupo-lotes").hidden = true;
     document.querySelector("#aviso-edicion").hidden = false;
   }
+}
+
+async function prepararEliminar() {
+  const config = modulos[modulo];
+  const boton = document.querySelector("#boton-eliminar");
+  if (!boton || !id || !config.eliminar) {
+    return;
+  }
+
+  const registro = await config.obtener(id);
+  if (!registro) {
+    return; // no se puede eliminar algo que no existe
+  }
+
+  boton.hidden = false;
+  boton.addEventListener("click", async () => {
+    await config.eliminar(id);
+    boton.disabled = true;
+    mostrarMensaje("Eliminado correctamente. Regresando a la lista...", false);
+    setTimeout(() => {
+      window.location.href = config.lista;
+    }, 1200);
+  });
 }
 
 formulario.addEventListener("submit", (evento) => {
@@ -456,6 +478,7 @@ async function iniciar() {
   await cargarCategorias();
   await prepararIngredientes();
   await prepararEdicion();
+  await prepararEliminar();
   preseleccionarLote();
 }
 
