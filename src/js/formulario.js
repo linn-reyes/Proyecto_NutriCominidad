@@ -14,7 +14,10 @@ import {
   obtenerColonias,
   obtenerLote,
   obtenerInventarios,
-  obtenerLotes
+  obtenerLotes,
+  obtenerAlimento,
+  obtenerCategoria,
+  obtenerCategorias,
 } from "./datos.js";
 
 cargarPartials();
@@ -51,7 +54,7 @@ const modulos = {
     tituloEditar: "Editar producto",
     lista: "inventarios-com.html",
   },
-    beneficiarios: {
+  beneficiarios: {
     obtener: obtenerBeneficiario,
     tituloEditar: "Editar familia",
     lista: "beneficiarios-org.html",
@@ -61,12 +64,22 @@ const modulos = {
     tituloEditar: "Editar donación",
     lista: "donaciones-com.html",
   },
-    lotes: {
+  lotes: {
     obtener: obtenerLote,
     tituloEditar: "Editar lote",
     lista: "lotes-com.html",
     validar: validarLote,
-  }
+  },
+  "alimentos-admin": {
+    obtener: obtenerAlimento,
+    tituloEditar: "Editar alimento",
+    lista: "alimentos-admin.html",
+  },
+  "categorias-admin": {
+    obtener: obtenerCategoria,
+    tituloEditar: "Editar categoría",
+    lista: "categorias-admin.html",
+  },
 };
 
 function mostrarMensaje(texto, esError) {
@@ -138,7 +151,13 @@ async function cargarColonias() {
 
 // Reglas del lote (las mismas que están en el diccionario de datos)
 function validarLote() {
-  const { Fecha_Recepcion, Fecha_Preferente, Fecha_Caducidad, Cantidad_Inicial, Stock } = formulario.elements;
+  const {
+    Fecha_Recepcion,
+    Fecha_Preferente,
+    Fecha_Caducidad,
+    Cantidad_Inicial,
+    Stock,
+  } = formulario.elements;
 
   if (Fecha_Caducidad.value <= Fecha_Recepcion.value) {
     return "La fecha de caducidad debe ser posterior a la de recepción.";
@@ -173,7 +192,10 @@ function entradasLotes() {
 }
 
 function actualizarTotal() {
-  const total = entradasLotes().reduce((suma, entrada) => suma + Number(entrada.value || 0), 0);
+  const total = entradasLotes().reduce(
+    (suma, entrada) => suma + Number(entrada.value || 0),
+    0,
+  );
   document.querySelector("#Cantidad").value = total;
 }
 
@@ -183,7 +205,9 @@ async function cargarLotesDonacion() {
     return;
   }
 
-  const lotes = (await obtenerLotes()).filter((lote) => lote.Stock > 0 && lote.Aviso !== "Caducado");
+  const lotes = (await obtenerLotes()).filter(
+    (lote) => lote.Stock > 0 && lote.Aviso !== "Caducado",
+  );
 
   if (lotes.length === 0) {
     document.querySelector("#sin-lotes").hidden = false;
@@ -211,6 +235,21 @@ async function cargarLotesDonacion() {
 
     campo.append(etiqueta, entrada);
     contenedor.appendChild(campo);
+  });
+}
+
+async function cargarCategorias() {
+  const select = document.querySelector("#ID_Categoria");
+  if (!select) {
+    return;
+  }
+
+  const categorias = await obtenerCategorias();
+  categorias.forEach((categoria) => {
+    const opcion = document.createElement("option");
+    opcion.value = categoria.ID_Categoria;
+    opcion.textContent = categoria.Nombre_Categoria;
+    select.appendChild(opcion);
   });
 }
 
@@ -283,7 +322,7 @@ async function prepararEdicion() {
     }
   }
 
-    if (modulo === "donaciones") {
+  if (modulo === "donaciones") {
     document.querySelector("#grupo-lotes").hidden = true;
     document.querySelector("#aviso-edicion").hidden = false;
   }
@@ -303,7 +342,7 @@ formulario.addEventListener("submit", (evento) => {
     return;
   }
 
-    const errorRegla = modulos[modulo].validar?.();
+  const errorRegla = modulos[modulo].validar?.();
   if (errorRegla) {
     mostrarMensaje(errorRegla, true);
     return;
@@ -323,6 +362,7 @@ async function iniciar() {
   await cargarColonias();
   await cargarInventarios();
   await cargarLotesDonacion();
+  await cargarCategorias();
   await prepararEdicion();
   preseleccionarLote();
 }

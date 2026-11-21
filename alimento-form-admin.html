@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Alimento</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="alimentos-admin">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="alimentos-admin.html">&larr; Volver al catálogo</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Agregar alimento</h2>
+            <p class="seccion__texto">Registra un alimento con su información nutricional por porción (100 g o 1 pieza).</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Nombre_Alimento">Nombre:</label>
+                    <input class="formulario__input" type="text" id="Nombre_Alimento" name="Nombre_Alimento" minlength="2" maxlength="80" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="ID_Categoria">Categoría:</label>
+                    <select class="formulario__select" id="ID_Categoria" name="ID_Categoria" required>
+                        <option value="">Selecciona una categoría</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Descripcion">Descripción:</label>
+                    <textarea class="formulario__input" id="Descripcion" name="Descripcion" rows="2" maxlength="200" required></textarea>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Unidad_Medida">Unidad de medida:</label>
+                    <select class="formulario__select" id="Unidad_Medida" name="Unidad_Medida" required>
+                        <option value="">Selecciona una unidad</option>
+                        <option value="kg">kg</option>
+                        <option value="pieza">pieza</option>
+                        <option value="litro">litro</option>
+                    </select>
+                </div>
+
+                <fieldset class="formulario__grupo">
+                    <legend class="formulario__etiqueta">Información nutricional por porción:</legend>
+
+                    <div class="formulario__campo">
+                        <label class="formulario__etiqueta" for="Calorias">Calorías (kcal):</label>
+                        <input class="formulario__input" type="number" id="Calorias" name="Calorias" min="0" max="900" required>
+                    </div>
+
+                    <div class="formulario__campo">
+                        <label class="formulario__etiqueta" for="Proteinas">Proteínas (g):</label>
+                        <input class="formulario__input" type="number" id="Proteinas" name="Proteinas" min="0" max="100" required>
+                    </div>
+
+                    <div class="formulario__campo">
+                        <label class="formulario__etiqueta" for="Carbohidratos">Carbohidratos (g):</label>
+                        <input class="formulario__input" type="number" id="Carbohidratos" name="Carbohidratos" min="0" max="100" required>
+                    </div>
+
+                    <div class="formulario__campo">
+                        <label class="formulario__etiqueta" for="Grasas">Grasas (g):</label>
+                        <input class="formulario__input" type="number" id="Grasas" name="Grasas" min="0" max="100" required>
+                    </div>
+                </fieldset>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Estado">Estado:</label>
+                    <select class="formulario__select" id="Estado" name="Estado" required>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="alimentos-admin.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>

@@ -16,6 +16,7 @@ import {
   obtenerLote,
   obtenerOrganizacionAdmin,
   cambiarEstatusOrganizacion,
+  obtenerAlimento
 } from "./datos.js";
 
 cargarPartials();
@@ -140,6 +141,20 @@ const modulos = {
       ["Correo", o.Correo_Org],
       ["Dirección", `${o.Calle_Org} ${o.Numero_Org}, ${o.Nombre_Colonia}`],
       ["Cuenta que la registró", o.Cuenta],
+    ],
+  },
+    "alimentos-admin": {
+    obtener: obtenerAlimento,
+    titulo: (a) => a.Nombre_Alimento,
+    campos: (a) => [
+      ["Categoría", a.Nombre_Categoria],
+      ["Descripción", a.Descripcion],
+      ["Unidad de medida", a.Unidad_Medida],
+      ["Calorías", `${a.Calorias} kcal`],
+      ["Proteínas", `${a.Proteinas} g`],
+      ["Carbohidratos", `${a.Carbohidratos} g`],
+      ["Grasas", `${a.Grasas} g`],
+      ["Estado", a.Estado],
     ],
   },
 };

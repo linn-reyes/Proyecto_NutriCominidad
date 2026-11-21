@@ -10,7 +10,9 @@ import {
   obtenerDonacionesRecibidas,
   obtenerLotes,
   obtenerBeneficiarios,
-  obtenerTodasOrganizaciones
+  obtenerTodasOrganizaciones,
+  obtenerCatalogoAlimentos,
+  obtenerCategoriasConConteo
 } from "./datos.js";
 
 cargarPartials();
@@ -139,6 +141,19 @@ const modulos = {
     columnas: (o) => [o.Nombre_Org, o.Tipo_Org, o.Responsable, o.Estatus_Org],
     clase: (o) => (o.Estatus_Org === "Pendiente" ? "tabla__fila--preferente" : undefined),
   },
+    "alimentos-admin": {
+    obtener: obtenerCatalogoAlimentos,
+    id: "ID_Alimento",
+    detalle: "alimento-detalle-admin.html",
+    columnas: (a) => [a.Nombre_Alimento, a.Nombre_Categoria, a.Unidad_Medida, `${a.Calorias} kcal`, a.Estado],
+  },
+  "categorias-admin": {
+    obtener: obtenerCategoriasConConteo,
+    id: "ID_Categoria",
+    detalle: "categoria-form-admin.html",
+    textoEnlace: "Editar",
+    columnas: (c) => [c.Nombre_Categoria, c.Descripcion, c.Total_Alimentos, c.Estado],
+  },
 };
 
 async function mostrarLista() {
@@ -169,7 +184,7 @@ async function mostrarLista() {
     const enlace = document.createElement("a");
     enlace.className = "tabla__enlace";
     enlace.href = `${config.detalle}?id=${registro[config.id]}`;
-    enlace.textContent = "Ver";
+    enlace.textContent = config.textoEnlace ?? "Ver";
     celdaDetalle.appendChild(enlace);
     fila.appendChild(celdaDetalle);
 

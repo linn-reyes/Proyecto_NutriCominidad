@@ -383,7 +383,7 @@ function agregarAlimento(registro) {
 }
 
 export async function obtenerAlimentos() {
-  return alimentos;
+  return alimentos.filter((a) => a.Estado === 'Activo');
 }
 
 export async function obtenerInventarios() {
@@ -582,4 +582,32 @@ export async function cambiarEstatusOrganizacion(id, nuevoEstatus) {
     organizacion.Estatus_Org = nuevoEstatus;
   }
   return organizacion ? agregarResponsableCuenta(organizacion) : undefined;
+}
+
+// ---- Administrador: catálogo de alimentos y categorías ----
+function agregarCategoria(alimento) {
+  const categoria = categorias.find((c) => c.ID_Categoria === alimento.ID_Categoria);
+  return { ...alimento, Nombre_Categoria: categoria ? categoria.Nombre_Categoria : 'Sin categoría' };
+}
+
+export async function obtenerCatalogoAlimentos() {
+  return alimentos
+    .map(agregarCategoria)
+    .sort((a, b) => a.Nombre_Alimento.localeCompare(b.Nombre_Alimento));
+}
+
+export async function obtenerAlimento(id) {
+  const alimento = alimentos.find((a) => a.ID_Alimento === Number(id));
+  return alimento ? agregarCategoria(alimento) : undefined;
+}
+
+export async function obtenerCategoriasConConteo() {
+  return categorias.map((categoria) => ({
+    ...categoria,
+    Total_Alimentos: alimentos.filter((a) => a.ID_Categoria === categoria.ID_Categoria).length,
+  }));
+}
+
+export async function obtenerCategoria(id) {
+  return categorias.find((c) => c.ID_Categoria === Number(id));
 }

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Categoría</title>
+    <link rel="stylesheet" href="./src/css/formulario.css" />
+  </head>
+
+  <body data-modulo="categorias-admin">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="categorias-admin.html"
+        >&larr; Volver a categorías</a
+      >
+
+      <section class="seccion">
+        <h2 class="seccion__titulo" id="titulo">Agregar categoría</h2>
+        <p class="seccion__texto">
+          Crea un grupo para organizar los alimentos del catálogo.
+        </p>
+
+        <form class="formulario" id="formulario" action="#" method="post">
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Nombre_Categoria"
+              >Nombre:</label
+            >
+            <input
+              class="formulario__input"
+              type="text"
+              id="Nombre_Categoria"
+              name="Nombre_Categoria"
+              minlength="3"
+              maxlength="50"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Descripcion"
+              >Descripción:</label
+            >
+            <textarea
+              class="formulario__input"
+              id="Descripcion"
+              name="Descripcion"
+              rows="2"
+              maxlength="100"
+              required
+            ></textarea>
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Estado">Estado:</label>
+            <select
+              class="formulario__select"
+              id="Estado"
+              name="Estado"
+              required
+            >
+              <option value="Activa">Activa</option>
+              <option value="Inactiva">Inactiva</option>
+            </select>
+          </div>
+
+          <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+          <div class="formulario__acciones">
+            <button class="formulario__boton" type="submit">Guardar</button>
+            <a class="formulario__cancelar" href="categorias-admin.html"
+              >Cancelar</a
+            >
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+  </body>
+</html>
