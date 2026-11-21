@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Receta</title>
+    <link rel="stylesheet" href="./src/css/formulario.css" />
+  </head>
+
+  <body data-modulo="recetas-admin">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="recetas-admin.html"
+        >&larr; Volver a recetas</a
+      >
+
+      <section class="seccion">
+        <h2 class="seccion__titulo" id="titulo">Agregar receta</h2>
+        <p class="seccion__texto">
+          Registra una receta económica con los alimentos del catálogo.
+        </p>
+
+        <form class="formulario" id="formulario" action="#" method="post">
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Nombre_Receta"
+              >Nombre:</label
+            >
+            <input
+              class="formulario__input"
+              type="text"
+              id="Nombre_Receta"
+              name="Nombre_Receta"
+              minlength="3"
+              maxlength="50"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Descripcion"
+              >Descripción:</label
+            >
+            <textarea
+              class="formulario__input"
+              id="Descripcion"
+              name="Descripcion"
+              rows="2"
+              maxlength="300"
+              required
+            ></textarea>
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Tiempo_Preparacion"
+              >Tiempo de preparación (minutos):</label
+            >
+            <input
+              class="formulario__input"
+              type="number"
+              id="Tiempo_Preparacion"
+              name="Tiempo_Preparacion"
+              min="1"
+              max="600"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Porciones"
+              >Porciones:</label
+            >
+            <input
+              class="formulario__input"
+              type="number"
+              id="Porciones"
+              name="Porciones"
+              min="1"
+              max="50"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Costo"
+              >Costo estimado (pesos):</label
+            >
+            <input
+              class="formulario__input"
+              type="number"
+              id="Costo"
+              name="Costo"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Propuesta"
+              >Propuesta (cuándo y cómo servirla):</label
+            >
+            <textarea
+              class="formulario__input"
+              id="Propuesta"
+              name="Propuesta"
+              rows="2"
+              maxlength="500"
+            ></textarea>
+          </div>
+
+          <fieldset class="formulario__grupo">
+            <legend class="formulario__etiqueta">Ingredientes:</legend>
+            <div id="lista-ingredientes"></div>
+            <button
+              class="formulario__secundario"
+              id="agregar-ingrediente"
+              type="button"
+            >
+              + Agregar ingrediente
+            </button>
+          </fieldset>
+
+          <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+          <div class="formulario__acciones">
+            <button class="formulario__boton" type="submit">Guardar</button>
+            <a class="formulario__cancelar" href="recetas-admin.html"
+              >Cancelar</a
+            >
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+  </body>
+</html>

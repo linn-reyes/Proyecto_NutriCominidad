@@ -7,8 +7,14 @@ import {
   obtenerEntregas,
   obtenerInventarios,
   obtenerDonaciones,
-  obtenerDonacionesRecibidas
-} from './datos.js';
+  obtenerDonacionesRecibidas,
+  obtenerLotes,
+  obtenerBeneficiarios,
+  obtenerTodasOrganizaciones,
+  obtenerCatalogoAlimentos,
+  obtenerCategoriasConConteo,
+  obtenerMisAlergias
+} from "./datos.js";
 
 cargarPartials();
 
@@ -16,6 +22,13 @@ const modulo = document.body.dataset.modulo;
 const lista = document.querySelector("#lista");
 const mensajeVacio = document.querySelector("#mensaje-vacio");
 const tabla = document.querySelector(".tabla");
+
+// Clase CSS de la fila según el aviso de caducidad
+const clasesAviso = {
+  Caducado: "tabla__fila--caducado",
+  "Caduca pronto": "tabla__fila--urgente",
+  "Pasó consumo preferente": "tabla__fila--preferente",
+};
 
 // Qué datos y qué columnas usa cada módulo
 const modulos = {
@@ -70,7 +83,7 @@ const modulos = {
     detalle: "entrega-detalle-org.html",
     columnas: (e) => [e.Fecha_Entrega, e.Responsable, e.Estado],
   },
-    inventarios: {
+  inventarios: {
     obtener: obtenerInventarios,
     id: "ID_Inventario",
     detalle: "inventario-detalle-com.html",
@@ -87,12 +100,74 @@ const modulos = {
     detalle: "donacion-detalle-com.html",
     columnas: (d) => [d.Fecha_Donacion, d.Nombre_Org, d.Cantidad, d.Estado],
   },
+  beneficiarios: {
+    obtener: obtenerBeneficiarios,
+    id: "ID_Beneficiario",
+    detalle: "beneficiario-detalle-org.html",
+    columnas: (b) => [
+      `${b.Nombre_Beneficiario} ${b.Apaterno} ${b.Amaterno}`,
+      b.Integrantes,
+      b.Telefono_Beneficiario,
+      b.Nombre_Colonia,
+    ],
+  },
+  lotes: {
+    obtener: obtenerLotes,
+    id: "ID_Lote",
+    detalle: "lote-detalle-com.html",
+    columnas: (l) => [
+      l.Nombre_Alimento,
+      `${l.Stock} ${l.Unidad_Medida}`,
+      l.Fecha_Caducidad,
+      l.Dias_Texto,
+      l.Aviso,
+    ],
+    clase: (l) => clasesAviso[l.Aviso],
+  },
   "donaciones-org": {
     obtener: obtenerDonacionesRecibidas,
     id: "ID_Donacion",
     detalle: "donacion-detalle-org.html",
-    columnas: (d) => [d.Fecha_Donacion, d.Nombre_Comercio, d.Cantidad, d.Estado],
-  }
+    columnas: (d) => [
+      d.Fecha_Donacion,
+      d.Nombre_Comercio,
+      d.Cantidad,
+      d.Estado,
+    ],
+  },
+    "organizaciones-admin": {
+    obtener: obtenerTodasOrganizaciones,
+    id: "ID_Organizacion",
+    detalle: "organizacion-detalle-admin.html",
+    columnas: (o) => [o.Nombre_Org, o.Tipo_Org, o.Responsable, o.Estatus_Org],
+    clase: (o) => (o.Estatus_Org === "Pendiente" ? "tabla__fila--preferente" : undefined),
+  },
+    "alimentos-admin": {
+    obtener: obtenerCatalogoAlimentos,
+    id: "ID_Alimento",
+    detalle: "alimento-detalle-admin.html",
+    columnas: (a) => [a.Nombre_Alimento, a.Nombre_Categoria, a.Unidad_Medida, `${a.Calorias} kcal`, a.Estado],
+  },
+  "categorias-admin": {
+    obtener: obtenerCategoriasConConteo,
+    id: "ID_Categoria",
+    detalle: "categoria-form-admin.html",
+    textoEnlace: "Editar",
+    columnas: (c) => [c.Nombre_Categoria, c.Descripcion, c.Total_Alimentos, c.Estado],
+  },
+    "recetas-admin": {
+    obtener: obtenerRecetas,
+    id: "ID_Receta",
+    detalle: "receta-detalle-admin.html",
+    columnas: (r) => [r.Nombre_Receta, `${r.Tiempo_Preparacion} min`, r.Porciones, `$${r.Costo}`],
+  },
+    alergias: {
+    obtener: obtenerMisAlergias,
+    id: "ID_Alergia",
+    detalle: "alergia-form-cli.html",
+    textoEnlace: "Editar",
+    columnas: (a) => [a.Nombre_Alergia],
+  },
 };
 
 async function mostrarLista() {
@@ -108,6 +183,11 @@ async function mostrarLista() {
   registros.forEach((registro) => {
     const fila = document.createElement("tr");
 
+    const clase = config.clase?.(registro);
+    if (clase) {
+      fila.classList.add(clase);
+    }
+
     config.columnas(registro).forEach((valor) => {
       const celda = document.createElement("td");
       celda.textContent = valor;
@@ -118,7 +198,7 @@ async function mostrarLista() {
     const enlace = document.createElement("a");
     enlace.className = "tabla__enlace";
     enlace.href = `${config.detalle}?id=${registro[config.id]}`;
-    enlace.textContent = "Ver";
+    enlace.textContent = config.textoEnlace ?? "Ver";
     celdaDetalle.appendChild(enlace);
     fila.appendChild(celdaDetalle);
 

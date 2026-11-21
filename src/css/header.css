@@ -41,3 +41,22 @@
   background-color: var(--color-naranja);
   color: var(--color-blanco);
 }
+
+.header__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--espacio-xs);
+}
+
+.header__perfil {
+  padding: var(--espacio-xs) var(--espacio-s);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-verde);
+}
+
+.header__perfil:hover {
+  text-decoration: underline;
+}

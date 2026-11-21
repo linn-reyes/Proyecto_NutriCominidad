@@ -12,6 +12,12 @@ import {
   obtenerDonacionRecibida,
   obtenerDetallesDonacion,
   confirmarRecepcion,
+  obtenerBeneficiario,
+  obtenerLote,
+  obtenerOrganizacionAdmin,
+  cambiarEstatusOrganizacion,
+  obtenerAlimento,
+  obtenerPerfil
 } from "./datos.js";
 
 cargarPartials();
@@ -91,6 +97,29 @@ const modulos = {
       ["Observaciones", d.Observaciones || "Sin observaciones"],
     ],
   },
+  beneficiarios: {
+    obtener: obtenerBeneficiario,
+    titulo: (b) => `${b.Nombre_Beneficiario} ${b.Apaterno} ${b.Amaterno}`,
+    campos: (b) => [
+      ["Teléfono", b.Telefono_Beneficiario],
+      ["Correo", b.Correo_Beneficiario || "Sin correo"],
+      ["Integrantes de la familia", b.Integrantes],
+      ["Dirección", `${b.Calle} ${b.Numero}`],
+      ["Colonia", b.Nombre_Colonia],
+    ],
+  },
+  lotes: {
+    obtener: obtenerLote,
+    titulo: (l) => `Lote de ${l.Nombre_Alimento}`,
+    campos: (l) => [
+      ["Aviso", l.Aviso],
+      ["Tiempo", l.Dias_Texto],
+      ["Stock", `${l.Stock} de ${l.Cantidad_Inicial} ${l.Unidad_Medida}`],
+      ["Fecha de recepción", l.Fecha_Recepcion],
+      ["Consumo preferente", l.Fecha_Preferente],
+      ["Caducidad", l.Fecha_Caducidad],
+    ],
+  },
   "donaciones-org": {
     obtener: obtenerDonacionRecibida,
     titulo: (d) => `Donación de ${d.Nombre_Comercio}`,
@@ -101,7 +130,50 @@ const modulos = {
       ["Estado", d.Estado],
       ["Observaciones", d.Observaciones || "Sin observaciones"],
     ],
-  }
+  },
+  "organizaciones-admin": {
+    obtener: obtenerOrganizacionAdmin,
+    titulo: (o) => o.Nombre_Org,
+    campos: (o) => [
+      ["Estatus", o.Estatus_Org],
+      ["Tipo", o.Tipo_Org],
+      ["Responsable", o.Responsable],
+      ["Teléfono", o.Telefono_Org],
+      ["Correo", o.Correo_Org],
+      ["Dirección", `${o.Calle_Org} ${o.Numero_Org}, ${o.Nombre_Colonia}`],
+      ["Cuenta que la registró", o.Cuenta],
+    ],
+  },
+    "alimentos-admin": {
+    obtener: obtenerAlimento,
+    titulo: (a) => a.Nombre_Alimento,
+    campos: (a) => [
+      ["Categoría", a.Nombre_Categoria],
+      ["Descripción", a.Descripcion],
+      ["Unidad de medida", a.Unidad_Medida],
+      ["Calorías", `${a.Calorias} kcal`],
+      ["Proteínas", `${a.Proteinas} g`],
+      ["Carbohidratos", `${a.Carbohidratos} g`],
+      ["Grasas", `${a.Grasas} g`],
+      ["Estado", a.Estado],
+    ],
+  },
+    perfil: {
+    obtener: obtenerPerfil,
+    titulo: (u) => `${u.Nombre_Usuario} ${u.APaterno}`,
+    campos: (u) => {
+      const campos = [
+        ["Tipo de cuenta", u.Nombre_Rol],
+        ["Correo", u.Correo],
+        ["Teléfono", u.Telefono],
+        ["Miembro desde", u.Fecha_Registro],
+      ];
+      if (u.Administra.length > 0) {
+        campos.push(["Administra", u.Administra.join(", ")]);
+      }
+      return campos;
+    },
+  },
 };
 
 function crearCelda(texto) {
@@ -196,6 +268,33 @@ function prepararConfirmacion(config, registro) {
   });
 }
 
+function prepararValidacion(config, registro) {
+  if (registro.Estatus_Org !== "Pendiente") {
+    return; // ya se validó: los botones se quedan ocultos
+  }
+
+  const botonAprobar = document.querySelector("#boton-aprobar");
+  const botonRechazar = document.querySelector("#boton-rechazar");
+  const mensaje = document.querySelector("#mensaje-validacion");
+
+  async function validar(nuevoEstatus) {
+    const actualizada = await cambiarEstatusOrganizacion(id, nuevoEstatus);
+    pintarDatos(config, actualizada);
+    botonAprobar.hidden = true;
+    botonRechazar.hidden = true;
+    mensaje.textContent =
+      nuevoEstatus === "Activa"
+        ? "Organización aprobada. Ya puede recibir donaciones."
+        : "Organización rechazada.";
+    mensaje.hidden = false;
+  }
+
+  botonAprobar.hidden = false;
+  botonRechazar.hidden = false;
+  botonAprobar.addEventListener("click", () => validar("Activa"));
+  botonRechazar.addEventListener("click", () => validar("Rechazada"));
+}
+
 async function mostrarDetalle() {
   const config = modulos[modulo];
   const registro = await config.obtener(id);
@@ -226,6 +325,20 @@ async function mostrarDetalle() {
   if (modulo === "donaciones-org") {
     await mostrarAlimentosDonados();
     prepararConfirmacion(config, registro);
+  }
+
+  // "Donar este lote" lleva el lote al formulario de donación
+  const botonDonar = document.querySelector("#boton-donar");
+  if (botonDonar) {
+    if (registro.Aviso === "Caducado") {
+      botonDonar.hidden = true; // un lote caducado no se dona
+    } else {
+      botonDonar.href = `${botonDonar.getAttribute("href")}?lote=${id}`;
+    }
+  }
+
+  if (modulo === "organizaciones-admin") {
+    prepararValidacion(config, registro);
   }
 }
 

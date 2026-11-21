@@ -64,3 +64,16 @@
   margin-top: var(--espacio-xs);
   font-weight: 700;
 }
+
+/* Avisos de caducidad en las filas de la tabla */
+.tabla__fila--caducado td {
+  background-color: var(--color-alerta);
+}
+
+.tabla__fila--urgente td {
+  background-color: var(--color-aviso);
+}
+
+.tabla__fila--preferente td {
+  background-color: var(--color-advertencia);
+}

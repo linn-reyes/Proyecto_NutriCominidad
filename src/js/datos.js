@@ -1,7 +1,6 @@
-const ID_USUARIO_ACTUAL = 1;
+import { obtenerUsuario } from './sesion.js';
+
 const ID_BENEFICIARIO_ACTUAL = 1;
-const ID_ORGANIZACION_ACTUAL = 1;
-const ID_COMERCIO_ACTUAL = 1;
 
 // ---- Usuarios y roles ----
 const roles = [
@@ -22,7 +21,9 @@ const usuarios = [
   { ID_Usuario: 4, ID_Rol: 3, Nombre_Usuario: 'Carmen', APaterno: 'Ruiz', Correo: 'carmen.ruiz@gmail.com',
     Telefono: '2224567890', Fecha_Registro: '2026-10-12', Estado_Usuario: 'Activo' },
   { ID_Usuario: 5, ID_Rol: 4, Nombre_Usuario: 'Laura', APaterno: 'Méndez', Correo: 'laura.mendez@gmail.com',
-    Telefono: '2225678901', Fecha_Registro: '2026-10-15', Estado_Usuario: 'Activo' }
+    Telefono: '2225678901', Fecha_Registro: '2026-10-15', Estado_Usuario: 'Activo' },
+  { ID_Usuario: 6, ID_Rol: 1, Nombre_Usuario: 'Sofía', APaterno: 'Castillo', Correo: 'sofia.castillo@gmail.com',
+    Telefono: '2226789900', Fecha_Registro: '2026-09-15', Estado_Usuario: 'Activo' }
 ];
 
 // ---- Ubicación ----
@@ -96,7 +97,6 @@ const categorias = [
   { ID_Categoria: 5, Nombre_Categoria: 'Frutas', Descripcion: 'Frutas frescas de temporada.', Estado: 'Activa' }
 ];
 
-// Valores nutricionales por 100 g (huevo por pieza)
 const alimentos = [
   { ID_Alimento: 1, Nombre_Alimento: 'Arroz', ID_Categoria: 1, Descripcion: 'Arroz blanco de grano largo.',
     Unidad_Medida: 'kg', Calorias: 360, Proteinas: 7, Carbohidratos: 79, Grasas: 1, Estado: 'Activo' },
@@ -256,7 +256,25 @@ const detallesDonaciones = [
   { ID_Detalle_Donacion: 6, ID_Donacion: 5, ID_Lote: 4, Cantidad: 5, Unidad_Medida: 'kg' }
 ];
 
-// Organizaciones (solo las validadas pueden recibir donaciones y solicitudes)
+// ---- Quién inició sesión ----
+const sesion = obtenerUsuario();
+const ID_USUARIO_ACTUAL = sesion?.id ?? 0;
+const ID_COMERCIO_ACTUAL = comercios.find((c) => c.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Comercio ?? 0;
+const ID_ORGANIZACION_ACTUAL = organizaciones.find((o) => o.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Organizacion ?? 0;
+
+const rolesPorId = { 1: 'admin', 2: 'usuario', 3: 'comercio', 4: 'organizacion' };
+
+export async function iniciarSesionLocal({ email }) {
+  const usuario = usuarios.find((u) => u.Correo === email && u.Estado_Usuario === 'Activo');
+  if (!usuario) {
+    throw new Error('Correo o contraseña incorrectos.');
+  }
+  return {
+    token: 'demo',
+    user: { id: usuario.ID_Usuario, name: usuario.Nombre_Usuario, role: rolesPorId[usuario.ID_Rol] },
+  };
+}
+
 export async function obtenerOrganizaciones() {
   return organizaciones.filter((org) => org.Estatus_Org === 'Activa');
 }
@@ -279,7 +297,6 @@ export async function obtenerIngredientes(idReceta) {
     });
 }
 
-// Recomendaciones: recetas ordenadas de la más económica a la más cara
 export async function obtenerRecomendaciones() {
   const ordenadas = [...recetas].sort((a, b) => a.Costo - b.Costo);
 
@@ -366,7 +383,7 @@ function agregarAlimento(registro) {
 }
 
 export async function obtenerAlimentos() {
-  return alimentos;
+  return alimentos.filter((a) => a.Estado === 'Activo');
 }
 
 export async function obtenerInventarios() {
@@ -425,16 +442,62 @@ export async function obtenerComercios() {
   return comercios;
 }
 
-// ---- Comercio: lotes ordenados del que caduca primero al último ----
-export async function obtenerLotes() {
+// ---- Comercio: lotes y alertas de caducidad ----
+const MS_POR_DIA = 24 * 60 * 60 * 1000;
+
+// Días que faltan para una fecha (negativo si ya pasó)
+function diasHasta(fecha) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const objetivo = new Date(`${fecha}T00:00:00`);
+  return Math.round((objetivo.getTime() - hoy.getTime()) / MS_POR_DIA);
+}
+
+function calcularAviso(lote) {
+  const diasCaducidad = diasHasta(lote.Fecha_Caducidad);
+  if (diasCaducidad < 0) {
+    return 'Caducado';
+  }
+  if (diasCaducidad <= 3) {
+    return 'Caduca pronto';
+  }
+  if (diasHasta(lote.Fecha_Preferente) < 0) {
+    return 'Pasó consumo preferente';
+  }
+  return 'Vigente';
+}
+
+function textoDias(dias) {
+  if (dias < 0) {
+    return `Caducó hace ${Math.abs(dias)} día(s)`;
+  }
+  if (dias === 0) {
+    return 'Caduca hoy';
+  }
+  return `Faltan ${dias} día(s)`;
+}
+
+function lotesDeMiComercio() {
   const misInventarios = inventarios.filter((i) => i.ID_Comercio === ID_COMERCIO_ACTUAL);
   return lotes
     .filter((lote) => misInventarios.some((i) => i.ID_Inventario === lote.ID_Inventario))
     .map((lote) => {
       const inventario = misInventarios.find((i) => i.ID_Inventario === lote.ID_Inventario);
-      return agregarAlimento({ ...lote, ID_Alimento: inventario.ID_Alimento });
-    })
-    .sort((a, b) => a.Fecha_Caducidad.localeCompare(b.Fecha_Caducidad));
+      const dias = diasHasta(lote.Fecha_Caducidad);
+      return {
+        ...agregarAlimento({ ...lote, ID_Alimento: inventario.ID_Alimento }),
+        Dias_Texto: textoDias(dias),
+        Aviso: calcularAviso(lote),
+      };
+    });
+}
+
+export async function obtenerLotes() {
+  return lotesDeMiComercio().sort((a, b) => a.Fecha_Caducidad.localeCompare(b.Fecha_Caducidad));
+}
+
+export async function obtenerLote(id) {
+  return lotesDeMiComercio().find((lote) => lote.ID_Lote === Number(id));
 }
 
 // ---- Qué alimentos incluye una donación ----
@@ -474,4 +537,112 @@ export async function confirmarRecepcion(id) {
     donacion.Estado = 'Entregada';
   }
   return donacion ? agregarComercio(donacion) : undefined;
+}
+
+// ---- Organización: beneficiarios (familias) ----
+function agregarColonia(beneficiario) {
+  const colonia = colonias.find((c) => c.ID_Colonia === beneficiario.ID_Colonia);
+  return { ...beneficiario, Nombre_Colonia: colonia ? colonia.Nombre_Colonia : 'Desconocida' };
+}
+
+export async function obtenerBeneficiarios() {
+  return beneficiarios.map(agregarColonia);
+}
+
+export async function obtenerBeneficiario(id) {
+  const beneficiario = beneficiarios.find((b) => b.ID_Beneficiario === Number(id));
+  return beneficiario ? agregarColonia(beneficiario) : undefined;
+}
+
+// ---- Administrador: validación de organizaciones ----
+function agregarResponsableCuenta(organizacion) {
+  const usuario = usuarios.find((u) => u.ID_Usuario === organizacion.ID_Usuario);
+  return {
+    ...agregarColonia(organizacion),
+    Cuenta: usuario ? `${usuario.Nombre_Usuario} ${usuario.APaterno}` : 'Sin cuenta',
+  };
+}
+
+// Primero las pendientes (en orden de llegada), luego activas y rechazadas
+export async function obtenerTodasOrganizaciones() {
+  const orden = { Pendiente: 0, Activa: 1, Rechazada: 2 };
+  return organizaciones
+    .map(agregarResponsableCuenta)
+    .sort((a, b) => orden[a.Estatus_Org] - orden[b.Estatus_Org]);
+}
+
+export async function obtenerOrganizacionAdmin(id) {
+  const organizacion = organizaciones.find((o) => o.ID_Organizacion === Number(id));
+  return organizacion ? agregarResponsableCuenta(organizacion) : undefined;
+}
+
+export async function cambiarEstatusOrganizacion(id, nuevoEstatus) {
+  const organizacion = organizaciones.find((o) => o.ID_Organizacion === Number(id));
+  if (organizacion?.Estatus_Org === 'Pendiente') {
+    organizacion.Estatus_Org = nuevoEstatus;
+  }
+  return organizacion ? agregarResponsableCuenta(organizacion) : undefined;
+}
+
+// ---- Administrador: catálogo de alimentos y categorías ----
+function agregarCategoria(alimento) {
+  const categoria = categorias.find((c) => c.ID_Categoria === alimento.ID_Categoria);
+  return { ...alimento, Nombre_Categoria: categoria ? categoria.Nombre_Categoria : 'Sin categoría' };
+}
+
+export async function obtenerCatalogoAlimentos() {
+  return alimentos
+    .map(agregarCategoria)
+    .sort((a, b) => a.Nombre_Alimento.localeCompare(b.Nombre_Alimento));
+}
+
+export async function obtenerAlimento(id) {
+  const alimento = alimentos.find((a) => a.ID_Alimento === Number(id));
+  return alimento ? agregarCategoria(alimento) : undefined;
+}
+
+export async function obtenerCategoriasConConteo() {
+  return categorias.map((categoria) => ({
+    ...categoria,
+    Total_Alimentos: alimentos.filter((a) => a.ID_Categoria === categoria.ID_Categoria).length,
+  }));
+}
+
+export async function obtenerCategoria(id) {
+  return categorias.find((c) => c.ID_Categoria === Number(id));
+}
+
+// ---- Usuario: alergias (tabla propia por la 4FN) ----
+export async function obtenerMisAlergias() {
+  return alergias.filter((a) => a.ID_Usuario === ID_USUARIO_ACTUAL);
+}
+
+export async function obtenerAlergia(id) {
+  return alergias.find((a) => a.ID_Alergia === Number(id) && a.ID_Usuario === ID_USUARIO_ACTUAL);
+}
+
+export async function eliminarAlergia(id) {
+  const indice = alergias.findIndex((a) => a.ID_Alergia === Number(id) && a.ID_Usuario === ID_USUARIO_ACTUAL);
+  if (indice !== -1) {
+    alergias.splice(indice, 1);
+  }
+  return indice !== -1;
+}
+
+// ---- Perfil: datos de la cuenta y lo que administra (relación 1 : N) ----
+export async function obtenerPerfil() {
+  const usuario = await obtenerUsuarioActual();
+  if (!usuario) {
+    return undefined;
+  }
+
+  const misComercios = comercios
+    .filter((c) => c.ID_Usuario === ID_USUARIO_ACTUAL)
+    .map((c) => c.Nombre_Comercio);
+
+  const misOrganizaciones = organizaciones
+    .filter((o) => o.ID_Usuario === ID_USUARIO_ACTUAL)
+    .map((o) => `${o.Nombre_Org} (${o.Estatus_Org})`);
+
+  return { ...usuario, Administra: [...misComercios, ...misOrganizaciones] };
 }
