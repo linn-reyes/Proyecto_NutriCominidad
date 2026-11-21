@@ -11,7 +11,9 @@ import {
   obtenerDonacion,
   obtenerAlimentos,
   obtenerBeneficiario,
-  obtenerColonias
+  obtenerColonias,
+  obtenerLote,
+  obtenerInventarios
 } from "./datos.js";
 
 cargarPartials();
@@ -57,6 +59,12 @@ const modulos = {
     obtener: obtenerDonacion,
     tituloEditar: "Editar donación",
     lista: "donaciones-com.html",
+  },
+    lotes: {
+    obtener: obtenerLote,
+    tituloEditar: "Editar lote",
+    lista: "lotes-com.html",
+    validar: validarLote,
   }
 };
 
@@ -127,6 +135,37 @@ async function cargarColonias() {
   });
 }
 
+// Reglas del lote (las mismas que están en el diccionario de datos)
+function validarLote() {
+  const { Fecha_Recepcion, Fecha_Preferente, Fecha_Caducidad, Cantidad_Inicial, Stock } = formulario.elements;
+
+  if (Fecha_Caducidad.value <= Fecha_Recepcion.value) {
+    return "La fecha de caducidad debe ser posterior a la de recepción.";
+  }
+  if (Fecha_Preferente.value > Fecha_Caducidad.value) {
+    return "La fecha de consumo preferente no puede ser posterior a la de caducidad.";
+  }
+  if (Number(Stock.value) > Number(Cantidad_Inicial.value)) {
+    return "El stock no puede ser mayor que la cantidad recibida.";
+  }
+  return null;
+}
+
+async function cargarInventarios() {
+  const select = document.querySelector("#ID_Inventario");
+  if (!select) {
+    return;
+  }
+
+  const inventarios = await obtenerInventarios();
+  inventarios.forEach((inventario) => {
+    const opcion = document.createElement("option");
+    opcion.value = inventario.ID_Inventario;
+    opcion.textContent = `${inventario.Nombre_Alimento} (${inventario.Unidad_Medida})`;
+    select.appendChild(opcion);
+  });
+}
+
 // Llena cada campo cuyo name coincide con una columna del registro
 function llenarFormulario(registro) {
   for (const campo of formulario.elements) {
@@ -176,6 +215,12 @@ formulario.addEventListener("submit", (evento) => {
     return;
   }
 
+    const errorRegla = modulos[modulo].validar?.();
+  if (errorRegla) {
+    mostrarMensaje(errorRegla, true);
+    return;
+  }
+
   // Aquí después irá la llamada a la API
   mostrarMensaje("Guardado correctamente. Regresando a la lista...", false);
   setTimeout(() => {
@@ -188,6 +233,7 @@ async function iniciar() {
   await cargarSolicitudesOrganizacion();
   await cargarAlimentos();
   await cargarColonias();
+  await cargarInventarios();
   await prepararEdicion();
 }
 

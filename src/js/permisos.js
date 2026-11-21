@@ -22,6 +22,9 @@ export const permisos = {
   'donaciones-com': ['comercio'],
   'donacion-detalle-com': ['comercio'],
   'donacion-form-com': ['comercio'],
+  'lotes-com': ['comercio'],
+  'lote-detalle-com': ['comercio'],
+  'lote-form-com': ['comercio'],
   // Organización
   'home-organizacion': ['organizacion'],
   'solicitudes-org': ['organizacion'],

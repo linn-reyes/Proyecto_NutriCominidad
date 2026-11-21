@@ -8,8 +8,9 @@ import {
   obtenerInventarios,
   obtenerDonaciones,
   obtenerDonacionesRecibidas,
-  obtenerBeneficiarios
-} from './datos.js';
+  obtenerLotes,
+  obtenerBeneficiarios,
+} from "./datos.js";
 
 cargarPartials();
 
@@ -17,6 +18,13 @@ const modulo = document.body.dataset.modulo;
 const lista = document.querySelector("#lista");
 const mensajeVacio = document.querySelector("#mensaje-vacio");
 const tabla = document.querySelector(".tabla");
+
+// Clase CSS de la fila según el aviso de caducidad
+const clasesAviso = {
+  Caducado: "tabla__fila--caducado",
+  "Caduca pronto": "tabla__fila--urgente",
+  "Pasó consumo preferente": "tabla__fila--preferente",
+};
 
 // Qué datos y qué columnas usa cada módulo
 const modulos = {
@@ -71,7 +79,7 @@ const modulos = {
     detalle: "entrega-detalle-org.html",
     columnas: (e) => [e.Fecha_Entrega, e.Responsable, e.Estado],
   },
-    inventarios: {
+  inventarios: {
     obtener: obtenerInventarios,
     id: "ID_Inventario",
     detalle: "inventario-detalle-com.html",
@@ -88,7 +96,7 @@ const modulos = {
     detalle: "donacion-detalle-com.html",
     columnas: (d) => [d.Fecha_Donacion, d.Nombre_Org, d.Cantidad, d.Estado],
   },
-    beneficiarios: {
+  beneficiarios: {
     obtener: obtenerBeneficiarios,
     id: "ID_Beneficiario",
     detalle: "beneficiario-detalle-org.html",
@@ -99,12 +107,30 @@ const modulos = {
       b.Nombre_Colonia,
     ],
   },
+  lotes: {
+    obtener: obtenerLotes,
+    id: "ID_Lote",
+    detalle: "lote-detalle-com.html",
+    columnas: (l) => [
+      l.Nombre_Alimento,
+      `${l.Stock} ${l.Unidad_Medida}`,
+      l.Fecha_Caducidad,
+      l.Dias_Texto,
+      l.Aviso,
+    ],
+    clase: (l) => clasesAviso[l.Aviso],
+  },
   "donaciones-org": {
     obtener: obtenerDonacionesRecibidas,
     id: "ID_Donacion",
     detalle: "donacion-detalle-org.html",
-    columnas: (d) => [d.Fecha_Donacion, d.Nombre_Comercio, d.Cantidad, d.Estado],
-  }
+    columnas: (d) => [
+      d.Fecha_Donacion,
+      d.Nombre_Comercio,
+      d.Cantidad,
+      d.Estado,
+    ],
+  },
 };
 
 async function mostrarLista() {
@@ -119,6 +145,11 @@ async function mostrarLista() {
 
   registros.forEach((registro) => {
     const fila = document.createElement("tr");
+
+    const clase = config.clase?.(registro);
+    if (clase) {
+      fila.classList.add(clase);
+    }
 
     config.columnas(registro).forEach((valor) => {
       const celda = document.createElement("td");

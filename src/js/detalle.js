@@ -12,7 +12,8 @@ import {
   obtenerDonacionRecibida,
   obtenerDetallesDonacion,
   confirmarRecepcion,
-  obtenerBeneficiario
+  obtenerBeneficiario,
+  obtenerLote
 } from "./datos.js";
 
 cargarPartials();
@@ -101,6 +102,18 @@ const modulos = {
       ["Integrantes de la familia", b.Integrantes],
       ["Dirección", `${b.Calle} ${b.Numero}`],
       ["Colonia", b.Nombre_Colonia],
+    ],
+  },
+    lotes: {
+    obtener: obtenerLote,
+    titulo: (l) => `Lote de ${l.Nombre_Alimento}`,
+    campos: (l) => [
+      ["Aviso", l.Aviso],
+      ["Tiempo", l.Dias_Texto],
+      ["Stock", `${l.Stock} de ${l.Cantidad_Inicial} ${l.Unidad_Medida}`],
+      ["Fecha de recepción", l.Fecha_Recepcion],
+      ["Consumo preferente", l.Fecha_Preferente],
+      ["Caducidad", l.Fecha_Caducidad],
     ],
   },
   "donaciones-org": {

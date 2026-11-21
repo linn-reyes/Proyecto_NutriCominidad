@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriComunidad - Lote</title>
+    <link rel="stylesheet" href="./src/css/formulario.css">
+</head>
+
+<body data-modulo="lotes">
+
+    <div id="header-container"></div>
+
+    <main class="main">
+        <a class="main__volver" href="lotes-com.html">&larr; Volver a alimentos por caducar</a>
+
+        <section class="seccion">
+            <h2 class="seccion__titulo" id="titulo">Registrar lote</h2>
+            <p class="seccion__texto">Registra un lote recibido con sus fechas para recibir avisos antes de que caduque.</p>
+
+            <form class="formulario" id="formulario" action="#" method="post">
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="ID_Inventario">Producto:</label>
+                    <select class="formulario__select" id="ID_Inventario" name="ID_Inventario" required>
+                        <option value="">Selecciona un producto de tu inventario</option>
+                    </select>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Fecha_Recepcion">Fecha de recepción:</label>
+                    <input class="formulario__input" type="date" id="Fecha_Recepcion" name="Fecha_Recepcion" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Fecha_Preferente">Fecha de consumo preferente:</label>
+                    <input class="formulario__input" type="date" id="Fecha_Preferente" name="Fecha_Preferente" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Fecha_Caducidad">Fecha de caducidad:</label>
+                    <input class="formulario__input" type="date" id="Fecha_Caducidad" name="Fecha_Caducidad" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Cantidad_Inicial">Cantidad recibida:</label>
+                    <input class="formulario__input" type="number" id="Cantidad_Inicial" name="Cantidad_Inicial" min="1" required>
+                </div>
+
+                <div class="formulario__campo">
+                    <label class="formulario__etiqueta" for="Stock">Cantidad que queda (stock):</label>
+                    <input class="formulario__input" type="number" id="Stock" name="Stock" min="0" required>
+                </div>
+
+                <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+                <div class="formulario__acciones">
+                    <button class="formulario__boton" type="submit">Guardar</button>
+                    <a class="formulario__cancelar" href="lotes-com.html">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+</body>
+
+</html>
