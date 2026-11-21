@@ -1,10 +1,10 @@
 import { obtenerUsuario } from './sesion.js';
 
-const ID_USUARIO_ACTUAL = 1;
 const ID_BENEFICIARIO_ACTUAL = 1;
-const ID_ORGANIZACION_ACTUAL = 1;
-const ID_COMERCIO_ACTUAL = 1;
 const sesion = obtenerUsuario();
+const ID_USUARIO_ACTUAL = sesion?.id ?? 0;
+const ID_COMERCIO_ACTUAL = comercios.find((c) => c.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Comercio ?? 0;
+const ID_ORGANIZACION_ACTUAL = organizaciones.find((o) => o.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Organizacion ?? 0;
 
 
 // ---- Usuarios y roles ----
@@ -259,6 +259,21 @@ const detallesDonaciones = [
   { ID_Detalle_Donacion: 5, ID_Donacion: 4, ID_Lote: 3, Cantidad: 6, Unidad_Medida: 'pieza' },
   { ID_Detalle_Donacion: 6, ID_Donacion: 5, ID_Lote: 4, Cantidad: 5, Unidad_Medida: 'kg' }
 ];
+
+const rolesPorId = { 1: 'admin', 2: 'usuario', 3: 'comercio', 4: 'organizacion' };
+
+// Login de demostración: busca el correo en los datos locales.
+// No revisa contraseña porque los datos de prueba no tienen contraseñas.
+export async function iniciarSesionLocal({ email }) {
+  const usuario = usuarios.find((u) => u.Correo === email && u.Estado_Usuario === 'Activo');
+  if (!usuario) {
+    throw new Error('Correo o contraseña incorrectos.');
+  }
+  return {
+    token: 'demo',
+    user: { id: usuario.ID_Usuario, name: usuario.Nombre_Usuario, role: rolesPorId[usuario.ID_Rol] },
+  };
+}
 
 // Organizaciones (solo las validadas pueden recibir donaciones y solicitudes)
 export async function obtenerOrganizaciones() {
