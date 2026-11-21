@@ -440,16 +440,62 @@ export async function obtenerComercios() {
   return comercios;
 }
 
-// ---- Comercio: lotes ordenados del que caduca primero al último ----
-export async function obtenerLotes() {
+// ---- Comercio: lotes y alertas de caducidad ----
+const MS_POR_DIA = 24 * 60 * 60 * 1000;
+
+// Días que faltan para una fecha (negativo si ya pasó)
+function diasHasta(fecha) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const objetivo = new Date(`${fecha}T00:00:00`);
+  return Math.round((objetivo.getTime() - hoy.getTime()) / MS_POR_DIA);
+}
+
+function calcularAviso(lote) {
+  const diasCaducidad = diasHasta(lote.Fecha_Caducidad);
+  if (diasCaducidad < 0) {
+    return 'Caducado';
+  }
+  if (diasCaducidad <= 3) {
+    return 'Caduca pronto';
+  }
+  if (diasHasta(lote.Fecha_Preferente) < 0) {
+    return 'Pasó consumo preferente';
+  }
+  return 'Vigente';
+}
+
+function textoDias(dias) {
+  if (dias < 0) {
+    return `Caducó hace ${Math.abs(dias)} día(s)`;
+  }
+  if (dias === 0) {
+    return 'Caduca hoy';
+  }
+  return `Faltan ${dias} día(s)`;
+}
+
+function lotesDeMiComercio() {
   const misInventarios = inventarios.filter((i) => i.ID_Comercio === ID_COMERCIO_ACTUAL);
   return lotes
     .filter((lote) => misInventarios.some((i) => i.ID_Inventario === lote.ID_Inventario))
     .map((lote) => {
       const inventario = misInventarios.find((i) => i.ID_Inventario === lote.ID_Inventario);
-      return agregarAlimento({ ...lote, ID_Alimento: inventario.ID_Alimento });
-    })
-    .sort((a, b) => a.Fecha_Caducidad.localeCompare(b.Fecha_Caducidad));
+      const dias = diasHasta(lote.Fecha_Caducidad);
+      return {
+        ...agregarAlimento({ ...lote, ID_Alimento: inventario.ID_Alimento }),
+        Dias_Texto: textoDias(dias),
+        Aviso: calcularAviso(lote),
+      };
+    });
+}
+
+export async function obtenerLotes() {
+  return lotesDeMiComercio().sort((a, b) => a.Fecha_Caducidad.localeCompare(b.Fecha_Caducidad));
+}
+
+export async function obtenerLote(id) {
+  return lotesDeMiComercio().find((lote) => lote.ID_Lote === Number(id));
 }
 
 // ---- Qué alimentos incluye una donación ----
