@@ -39,5 +39,13 @@ export function cargarPartials() {
     cerrarSesion();
   });
 
+  // Los enlaces con data-inicio llevan al home del rol que inició sesión
+  const usuario = obtenerUsuario();
+  if (usuario) {
+    document.querySelectorAll("[data-inicio]").forEach((enlace) => {
+      enlace.href = inicioPorRol[usuario.role] ?? "/login.html";
+    });
+  }
+  
   return permitido;
 }

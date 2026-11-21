@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NutriComunidad - Editar mis datos</title>
+    <link rel="stylesheet" href="./src/css/formulario.css" />
+  </head>
+
+  <body data-modulo="perfil">
+    <div id="header-container"></div>
+
+    <main class="main">
+      <a class="main__volver" href="perfil.html">&larr; Volver a mi perfil</a>
+
+      <section class="seccion">
+        <h2 class="seccion__titulo" id="titulo">Editar mis datos</h2>
+        <p class="seccion__texto">Mantén tus datos de contacto actualizados.</p>
+
+        <form class="formulario" id="formulario" action="#" method="post">
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Nombre_Usuario"
+              >Nombre:</label
+            >
+            <input
+              class="formulario__input"
+              type="text"
+              id="Nombre_Usuario"
+              name="Nombre_Usuario"
+              minlength="2"
+              maxlength="50"
+              autocomplete="given-name"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="APaterno"
+              >Apellido paterno:</label
+            >
+            <input
+              class="formulario__input"
+              type="text"
+              id="APaterno"
+              name="APaterno"
+              minlength="2"
+              maxlength="50"
+              autocomplete="family-name"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Telefono"
+              >Teléfono (10 dígitos):</label
+            >
+            <input
+              class="formulario__input"
+              type="tel"
+              id="Telefono"
+              name="Telefono"
+              pattern="\d{10}"
+              inputmode="numeric"
+              maxlength="10"
+              autocomplete="tel"
+              required
+            />
+          </div>
+
+          <div class="formulario__campo">
+            <label class="formulario__etiqueta" for="Correo">Correo:</label>
+            <input
+              class="formulario__input"
+              type="email"
+              id="Correo"
+              name="Correo"
+              readonly
+            />
+            <p class="formulario__ayuda">
+              Tu correo es tu usuario para iniciar sesión y no se puede cambiar
+              aquí.
+            </p>
+          </div>
+
+          <p class="formulario__mensaje" id="mensaje-formulario" hidden></p>
+
+          <div class="formulario__acciones">
+            <button class="formulario__boton" type="submit">Guardar</button>
+            <a class="formulario__cancelar" href="perfil.html">Cancelar</a>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script type="module" src="./src/js/formulario.js"></script>
+  </body>
+</html>

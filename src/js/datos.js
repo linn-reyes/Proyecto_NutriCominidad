@@ -628,3 +628,21 @@ export async function eliminarAlergia(id) {
   }
   return indice !== -1;
 }
+
+// ---- Perfil: datos de la cuenta y lo que administra (relación 1 : N) ----
+export async function obtenerPerfil() {
+  const usuario = await obtenerUsuarioActual();
+  if (!usuario) {
+    return undefined;
+  }
+
+  const misComercios = comercios
+    .filter((c) => c.ID_Usuario === ID_USUARIO_ACTUAL)
+    .map((c) => c.Nombre_Comercio);
+
+  const misOrganizaciones = organizaciones
+    .filter((o) => o.ID_Usuario === ID_USUARIO_ACTUAL)
+    .map((o) => `${o.Nombre_Org} (${o.Estatus_Org})`);
+
+  return { ...usuario, Administra: [...misComercios, ...misOrganizaciones] };
+}

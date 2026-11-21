@@ -16,7 +16,8 @@ import {
   obtenerLote,
   obtenerOrganizacionAdmin,
   cambiarEstatusOrganizacion,
-  obtenerAlimento
+  obtenerAlimento,
+  obtenerPerfil
 } from "./datos.js";
 
 cargarPartials();
@@ -156,6 +157,22 @@ const modulos = {
       ["Grasas", `${a.Grasas} g`],
       ["Estado", a.Estado],
     ],
+  },
+    perfil: {
+    obtener: obtenerPerfil,
+    titulo: (u) => `${u.Nombre_Usuario} ${u.APaterno}`,
+    campos: (u) => {
+      const campos = [
+        ["Tipo de cuenta", u.Nombre_Rol],
+        ["Correo", u.Correo],
+        ["Teléfono", u.Telefono],
+        ["Miembro desde", u.Fecha_Registro],
+      ];
+      if (u.Administra.length > 0) {
+        campos.push(["Administra", u.Administra.join(", ")]);
+      }
+      return campos;
+    },
   },
 };
 

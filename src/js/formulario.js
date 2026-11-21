@@ -20,7 +20,8 @@ import {
   obtenerReceta,
   obtenerIngredientes,
   obtenerAlergia,
-  eliminarAlergia
+  eliminarAlergia,
+  obtenerUsuarioActual,
 } from "./datos.js";
 
 cargarPartials();
@@ -83,17 +84,23 @@ const modulos = {
     tituloEditar: "Editar categoría",
     lista: "categorias-admin.html",
   },
-    "recetas-admin": {
+  "recetas-admin": {
     obtener: obtenerReceta,
     tituloEditar: "Editar receta",
     lista: "recetas-admin.html",
     validar: validarReceta,
   },
-    alergias: {
+  alergias: {
     obtener: obtenerAlergia,
     tituloEditar: "Editar alergia",
     lista: "alergias-cli.html",
     eliminar: eliminarAlergia,
+  },
+  perfil: {
+    obtener: obtenerUsuarioActual,
+    tituloEditar: "Editar mis datos",
+    lista: "perfil.html",
+    siempreEditar: true,
   },
 };
 
@@ -309,7 +316,12 @@ function crearFilaIngrediente(ingrediente = {}) {
   select.required = true;
   select.add(new Option("Selecciona un alimento", ""));
   alimentosActivos.forEach((alimento) => {
-    select.add(new Option(`${alimento.Nombre_Alimento} (${alimento.Unidad_Medida})`, alimento.ID_Alimento));
+    select.add(
+      new Option(
+        `${alimento.Nombre_Alimento} (${alimento.Unidad_Medida})`,
+        alimento.ID_Alimento,
+      ),
+    );
   });
   select.value = ingrediente.ID_Alimento ?? "";
 
@@ -331,7 +343,11 @@ function crearFilaIngrediente(ingrediente = {}) {
   const fila = document.createElement("div");
   fila.className = "formulario__ingrediente";
   fila.dataset.ingrediente = "";
-  fila.append(crearCampo("Alimento", select), crearCampo("Cantidad", cantidad), quitar);
+  fila.append(
+    crearCampo("Alimento", select),
+    crearCampo("Cantidad", cantidad),
+    quitar,
+  );
 
   quitar.addEventListener("click", () => fila.remove());
   document.querySelector("#lista-ingredientes").appendChild(fila);
@@ -344,7 +360,9 @@ async function prepararIngredientes() {
   }
 
   alimentosActivos = await obtenerAlimentos();
-  document.querySelector("#agregar-ingrediente").addEventListener("click", () => crearFilaIngrediente());
+  document
+    .querySelector("#agregar-ingrediente")
+    .addEventListener("click", () => crearFilaIngrediente());
 
   // Al editar se cargan los ingredientes guardados; al crear, una fila vacía
   const guardados = id ? await obtenerIngredientes(id) : [];
@@ -396,11 +414,13 @@ function llenarFormulario(registro) {
 }
 
 async function prepararEdicion() {
-  if (!id) {
+  const config = modulos[modulo];
+
+  // Sin ?id= se está creando algo nuevo, salvo en páginas que siempre editan (perfil)
+  if (!id && !config.siempreEditar) {
     return;
   }
-
-  const config = modulos[modulo];
+  
   const registro = await config.obtener(id);
 
   if (!registro) {
