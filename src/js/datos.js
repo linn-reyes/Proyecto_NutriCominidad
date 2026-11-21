@@ -1,11 +1,6 @@
 import { obtenerUsuario } from './sesion.js';
 
 const ID_BENEFICIARIO_ACTUAL = 1;
-const sesion = obtenerUsuario();
-const ID_USUARIO_ACTUAL = sesion?.id ?? 0;
-const ID_COMERCIO_ACTUAL = comercios.find((c) => c.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Comercio ?? 0;
-const ID_ORGANIZACION_ACTUAL = organizaciones.find((o) => o.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Organizacion ?? 0;
-
 
 // ---- Usuarios y roles ----
 const roles = [
@@ -100,7 +95,6 @@ const categorias = [
   { ID_Categoria: 5, Nombre_Categoria: 'Frutas', Descripcion: 'Frutas frescas de temporada.', Estado: 'Activa' }
 ];
 
-// Valores nutricionales por 100 g (huevo por pieza)
 const alimentos = [
   { ID_Alimento: 1, Nombre_Alimento: 'Arroz', ID_Categoria: 1, Descripcion: 'Arroz blanco de grano largo.',
     Unidad_Medida: 'kg', Calorias: 360, Proteinas: 7, Carbohidratos: 79, Grasas: 1, Estado: 'Activo' },
@@ -260,10 +254,14 @@ const detallesDonaciones = [
   { ID_Detalle_Donacion: 6, ID_Donacion: 5, ID_Lote: 4, Cantidad: 5, Unidad_Medida: 'kg' }
 ];
 
+// ---- Quién inició sesión ----
+const sesion = obtenerUsuario();
+const ID_USUARIO_ACTUAL = sesion?.id ?? 0;
+const ID_COMERCIO_ACTUAL = comercios.find((c) => c.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Comercio ?? 0;
+const ID_ORGANIZACION_ACTUAL = organizaciones.find((o) => o.ID_Usuario === ID_USUARIO_ACTUAL)?.ID_Organizacion ?? 0;
+
 const rolesPorId = { 1: 'admin', 2: 'usuario', 3: 'comercio', 4: 'organizacion' };
 
-// Login de demostración: busca el correo en los datos locales.
-// No revisa contraseña porque los datos de prueba no tienen contraseñas.
 export async function iniciarSesionLocal({ email }) {
   const usuario = usuarios.find((u) => u.Correo === email && u.Estado_Usuario === 'Activo');
   if (!usuario) {
@@ -275,7 +273,6 @@ export async function iniciarSesionLocal({ email }) {
   };
 }
 
-// Organizaciones (solo las validadas pueden recibir donaciones y solicitudes)
 export async function obtenerOrganizaciones() {
   return organizaciones.filter((org) => org.Estatus_Org === 'Activa');
 }
@@ -298,7 +295,6 @@ export async function obtenerIngredientes(idReceta) {
     });
 }
 
-// Recomendaciones: recetas ordenadas de la más económica a la más cara
 export async function obtenerRecomendaciones() {
   const ordenadas = [...recetas].sort((a, b) => a.Costo - b.Costo);
 

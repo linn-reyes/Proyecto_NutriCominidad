@@ -1,5 +1,5 @@
 import footerHtml from '../partials/footer.html?raw';
-import { api } from './api.js';
+import { iniciarSesionLocal } from './datos.js';
 import { guardarSesion, obtenerUsuario } from './sesion.js';
 import { inicioPorRol } from './permisos.js';
 
@@ -23,7 +23,7 @@ formulario.addEventListener('submit', async (evento) => {
 
   try {
     const datos = Object.fromEntries(new FormData(formulario));
-    const respuesta = await api.post('/api/auth/login', datos);
+    const respuesta = await iniciarSesionLocal(datos);
 
     const inicio = inicioPorRol[respuesta.user.role];
     if (!inicio) {
