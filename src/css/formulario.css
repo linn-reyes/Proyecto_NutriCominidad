@@ -130,3 +130,36 @@
 .formulario__lote {
   margin-bottom: var(--espacio-s);
 }
+
+/* Filas de ingredientes en el formulario de recetas */
+.formulario__ingrediente {
+  display: grid;
+  gap: var(--espacio-xs);
+  margin-bottom: var(--espacio-s);
+  padding-bottom: var(--espacio-s);
+  border-bottom: 1px dashed var(--color-verde-claro);
+}
+
+@media (min-width: 600px) {
+  .formulario__ingrediente {
+    grid-template-columns: 2fr 1fr auto;
+    align-items: end;
+  }
+}
+
+.formulario__secundario {
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 2px solid var(--color-verde);
+  border-radius: var(--radio);
+  background-color: var(--color-blanco);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--color-verde);
+  cursor: pointer;
+}
+
+.formulario__secundario:hover {
+  background-color: var(--color-verde-claro);
+}

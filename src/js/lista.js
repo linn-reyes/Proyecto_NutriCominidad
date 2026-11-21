@@ -154,6 +154,12 @@ const modulos = {
     textoEnlace: "Editar",
     columnas: (c) => [c.Nombre_Categoria, c.Descripcion, c.Total_Alimentos, c.Estado],
   },
+    "recetas-admin": {
+    obtener: obtenerRecetas,
+    id: "ID_Receta",
+    detalle: "receta-detalle-admin.html",
+    columnas: (r) => [r.Nombre_Receta, `${r.Tiempo_Preparacion} min`, r.Porciones, `$${r.Costo}`],
+  },
 };
 
 async function mostrarLista() {

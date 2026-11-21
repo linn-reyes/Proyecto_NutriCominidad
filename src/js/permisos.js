@@ -47,6 +47,9 @@ export const permisos = {
   'alimento-form-admin': ['admin'],
   'categorias-admin': ['admin'],
   'categoria-form-admin': ['admin'],
+  'recetas-admin': ['admin'],
+  'receta-detalle-admin': ['admin'],
+  'receta-form-admin': ['admin'],
 };
 
 // A dónde va cada rol al iniciar sesión

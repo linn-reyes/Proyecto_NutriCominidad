@@ -18,6 +18,8 @@ import {
   obtenerAlimento,
   obtenerCategoria,
   obtenerCategorias,
+  obtenerReceta,
+  obtenerIngredientes
 } from "./datos.js";
 
 cargarPartials();
@@ -79,6 +81,12 @@ const modulos = {
     obtener: obtenerCategoria,
     tituloEditar: "Editar categoría",
     lista: "categorias-admin.html",
+  },
+    "recetas-admin": {
+    obtener: obtenerReceta,
+    tituloEditar: "Editar receta",
+    lista: "recetas-admin.html",
+    validar: validarReceta,
   },
 };
 
@@ -270,6 +278,89 @@ function preseleccionarLote() {
   actualizarTotal();
 }
 
+// ---- Receta: filas de ingredientes que se agregan y se quitan ----
+let alimentosActivos = [];
+let siguienteFila = 1;
+
+function crearCampo(textoEtiqueta, control) {
+  const campo = document.createElement("div");
+  campo.className = "formulario__campo";
+  const etiqueta = document.createElement("label");
+  etiqueta.className = "formulario__etiqueta";
+  etiqueta.htmlFor = control.id;
+  etiqueta.textContent = textoEtiqueta;
+  campo.append(etiqueta, control);
+  return campo;
+}
+
+function crearFilaIngrediente(ingrediente = {}) {
+  const numero = siguienteFila++;
+
+  const select = document.createElement("select");
+  select.className = "formulario__select";
+  select.id = `alimento-${numero}`;
+  select.required = true;
+  select.add(new Option("Selecciona un alimento", ""));
+  alimentosActivos.forEach((alimento) => {
+    select.add(new Option(`${alimento.Nombre_Alimento} (${alimento.Unidad_Medida})`, alimento.ID_Alimento));
+  });
+  select.value = ingrediente.ID_Alimento ?? "";
+
+  const cantidad = document.createElement("input");
+  cantidad.className = "formulario__input";
+  cantidad.type = "number";
+  cantidad.id = `cantidad-${numero}`;
+  cantidad.min = "0.01";
+  cantidad.step = "0.01";
+  cantidad.required = true;
+  cantidad.value = ingrediente.Cantidad ?? "";
+
+  const quitar = document.createElement("button");
+  quitar.className = "formulario__secundario";
+  quitar.type = "button";
+  quitar.textContent = "Quitar";
+  quitar.setAttribute("aria-label", `Quitar ingrediente ${numero}`);
+
+  const fila = document.createElement("div");
+  fila.className = "formulario__ingrediente";
+  fila.dataset.ingrediente = "";
+  fila.append(crearCampo("Alimento", select), crearCampo("Cantidad", cantidad), quitar);
+
+  quitar.addEventListener("click", () => fila.remove());
+  document.querySelector("#lista-ingredientes").appendChild(fila);
+}
+
+async function prepararIngredientes() {
+  const contenedor = document.querySelector("#lista-ingredientes");
+  if (!contenedor) {
+    return;
+  }
+
+  alimentosActivos = await obtenerAlimentos();
+  document.querySelector("#agregar-ingrediente").addEventListener("click", () => crearFilaIngrediente());
+
+  // Al editar se cargan los ingredientes guardados; al crear, una fila vacía
+  const guardados = id ? await obtenerIngredientes(id) : [];
+  if (guardados.length > 0) {
+    guardados.forEach((ingrediente) => crearFilaIngrediente(ingrediente));
+  } else {
+    crearFilaIngrediente();
+  }
+}
+
+function validarReceta() {
+  const filas = [...document.querySelectorAll("[data-ingrediente]")];
+  if (filas.length === 0) {
+    return "Agrega al menos un ingrediente.";
+  }
+
+  const elegidos = filas.map((fila) => fila.querySelector("select").value);
+  if (new Set(elegidos).size !== elegidos.length) {
+    return "Hay un ingrediente repetido. Junta las cantidades en una sola fila.";
+  }
+  return null;
+}
+
 function validarDonacion() {
   if (id) {
     return null; // al editar, los alimentos no cambian
@@ -363,6 +454,7 @@ async function iniciar() {
   await cargarInventarios();
   await cargarLotesDonacion();
   await cargarCategorias();
+  await prepararIngredientes();
   await prepararEdicion();
   preseleccionarLote();
 }
