@@ -19,10 +19,10 @@
             <h2 class="seccion__titulo">Inicia sesión en NutriComunidad</h2>
             <p class="seccion__texto">Conecta comercios, organizaciones y familias para un mejor uso de los alimentos.</p>
 
-            <form class="formulario" action="#" method="post">
+            <form class="formulario" method="post" id="form-login">
                 <div class="formulario__campo">
                     <label class="formulario__etiqueta" for="tipo">Iniciar sesión como:</label>
-                    <select class="formulario__select" id="tipo" name="tipo" required>
+                    <select class="formulario__select" id="tipo" name="role" required>
                         <option value="">Selecciona una opción</option>
                         <option value="usuario">Usuario</option>
                         <option value="comercio">Comercio</option>
@@ -39,6 +39,8 @@
                     <label class="formulario__etiqueta" for="pass">Contraseña:</label>
                     <input class="formulario__input" type="password" id="pass" name="password" placeholder="Tu contraseña" autocomplete="current-password" required>
                 </div>
+
+                <p class="error" id="error-login" hidden></p>
 
                 <div class="formulario__campo">
                     <button class="formulario__boton" type="submit">Iniciar Sesión</button>
