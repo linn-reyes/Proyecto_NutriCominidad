@@ -40,4 +40,4 @@ async function mostrarRecomendaciones() {
   });
 }
 
-mostrarRecomendaciones();
+await mostrarRecomendaciones();
