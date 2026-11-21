@@ -53,11 +53,17 @@
   font-weight: 700;
   text-decoration: none;
   color: var(--color-blanco);
+  border: none;
+  cursor: pointer;
 }
 
 .detalle__boton:hover {
   background-color: var(--color-naranja-oscuro);
   color: var(--color-blanco);
+}
+
+.detalle__boton[hidden] {
+  display: none;
 }
 
 @media (min-width: 600px) {

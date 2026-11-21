@@ -448,3 +448,30 @@ export async function obtenerDetallesDonacion(idDonacion) {
       return { ...detalle, Nombre_Alimento: alimento?.Nombre_Alimento ?? 'Desconocido' };
     });
 }
+
+// ---- Organización: donaciones recibidas ----
+function donacionesDeMiOrganizacion() {
+  return donaciones.filter((d) => d.ID_Organizacion === ID_ORGANIZACION_ACTUAL);
+}
+
+function agregarComercio(donacion) {
+  const comercio = comercios.find((c) => c.ID_Comercio === donacion.ID_Comercio);
+  return { ...donacion, Nombre_Comercio: comercio ? comercio.Nombre_Comercio : 'Desconocido' };
+}
+
+export async function obtenerDonacionesRecibidas() {
+  return donacionesDeMiOrganizacion().map(agregarComercio);
+}
+
+export async function obtenerDonacionRecibida(id) {
+  const donacion = donacionesDeMiOrganizacion().find((d) => d.ID_Donacion === Number(id));
+  return donacion ? agregarComercio(donacion) : undefined;
+}
+
+export async function confirmarRecepcion(id) {
+  const donacion = donacionesDeMiOrganizacion().find((d) => d.ID_Donacion === Number(id));
+  if (donacion?.Estado === 'Pendiente') {
+    donacion.Estado = 'Entregada';
+  }
+  return donacion ? agregarComercio(donacion) : undefined;
+}

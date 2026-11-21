@@ -10,7 +10,7 @@ import {
   obtenerInventario,
   obtenerDonacion,
   obtenerAlimentos
-} from './datos.js';
+} from "./datos.js";
 
 cargarPartials();
 
@@ -41,7 +41,7 @@ const modulos = {
     tituloEditar: "Editar entrega",
     lista: "entregas-org.html",
   },
-    inventarios: {
+  inventarios: {
     obtener: obtenerInventario,
     tituloEditar: "Editar producto",
     lista: "inventarios-com.html",
@@ -75,15 +75,15 @@ async function cargarOrganizaciones() {
   });
 }
 
-  async function cargarSolicitudesOrganizacion() {
-  const select = document.querySelector('#ID_Solicitud');
+async function cargarSolicitudesOrganizacion() {
+  const select = document.querySelector("#ID_Solicitud");
   if (!select) {
     return;
   }
-  
+
   const solicitudesOrg = await obtenerSolicitudesOrganizacion();
   solicitudesOrg.forEach((s) => {
-    const opcion = document.createElement('option');
+    const opcion = document.createElement("option");
     opcion.value = s.ID_Solicitud;
     opcion.textContent = `#${s.ID_Solicitud} · ${s.Familia}`;
     select.appendChild(opcion);
