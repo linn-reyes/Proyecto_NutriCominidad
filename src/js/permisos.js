@@ -1,6 +1,7 @@
 export const permisos = {
     home: ['usuario'],
-    usuario: ['admin'],
+    'home-organizacion': ['organizacion'],
+    'home-comercio': ['comercio'],
 }
 
 export function puedeEntrar(pagina, rol) {
