@@ -1,7 +1,11 @@
+import { obtenerUsuario } from './sesion.js';
+
 const ID_USUARIO_ACTUAL = 1;
 const ID_BENEFICIARIO_ACTUAL = 1;
 const ID_ORGANIZACION_ACTUAL = 1;
 const ID_COMERCIO_ACTUAL = 1;
+const sesion = obtenerUsuario();
+
 
 // ---- Usuarios y roles ----
 const roles = [
